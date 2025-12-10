@@ -35,27 +35,27 @@ export default function SpecialOffers() {
   };
 
   return (
-    <section className="bg-light-mint py-20">
-      <div className="container mx-auto px-6" dir="rtl">
-        <div className="flex items-center justify-between mb-12">
-          <h2 className="text-4xl  font-bold text-dark-blue">
+    <section className="bg-light-mint py-12 md:py-16 lg:py-20">
+      <div className="container mx-auto px-4 md:px-6" dir="rtl">
+        <div className="flex items-center justify-between mb-8 md:mb-12 gap-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue whitespace-nowrap">
             تخفیفات ویژه
           </h2>
-          <div className="w-[73rem] h-[1px] bg-dark-blue"></div>
-          <div className="flex flex-row-reverse gap-3">
+          <div className="flex-1 h-[1px] bg-dark-blue hidden md:block"></div>
+          <div className="flex flex-row-reverse gap-2 md:gap-3">
             <button
               onClick={() => scroll('right')}
-              className="w-12 h-12 bg-white border-2 border-light-grey rounded-xl flex items-center justify-center hover:border-primary hover:bg-primary hover:text-white transition-all shadow-md hover:shadow-lg group"
+              className="w-10 h-10 md:w-12 md:h-12 bg-white border-2 border-light-grey rounded-xl flex items-center justify-center hover:border-primary hover:bg-primary hover:text-white transition-all shadow-md hover:shadow-lg group"
             >
-              <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button
               onClick={() => scroll('left')}
-              className="w-12 h-12 bg-white border-2 border-light-grey rounded-xl flex items-center justify-center hover:border-primary hover:bg-primary hover:text-white transition-all shadow-md hover:shadow-lg group"
+              className="w-10 h-10 md:w-12 md:h-12 bg-white border-2 border-light-grey rounded-xl flex items-center justify-center hover:border-primary hover:bg-primary hover:text-white transition-all shadow-md hover:shadow-lg group"
             >
-              <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -71,7 +71,7 @@ export default function SpecialOffers() {
             <div
               key={offer.id}
               onClick={() => router.push(`/product/${offer.id}`)}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group flex-shrink-0 w-72 snap-start"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group flex-shrink-0 w-60 md:w-72 snap-start"
             >
               <div className="relative aspect-square bg-light-grey overflow-hidden">
                 <img
@@ -80,16 +80,16 @@ export default function SpecialOffers() {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 {/* Discount badge */}
-                <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-primary text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-bold shadow-lg">
                   {offer.discount}%
                 </div>
               </div>
 
-              <div className="p-5 text-right">
-                <h3 className="text-dark-blue font-semibold mb-3 text-lg line-clamp-2">{offer.name}</h3>
-                <div className="flex items-center justify-between ">
-                  <p className="text-primary text-xl font-bold">{offer.discountPrice} تومان</p>
-                  <p className="text-grey text-sm line-through">{offer.originalPrice}</p>
+              <div className="p-4 md:p-5 text-right">
+                <h3 className="text-dark-blue font-semibold mb-2 md:mb-3 text-base md:text-lg line-clamp-2">{offer.name}</h3>
+                <div className="flex items-center justify-between">
+                  <p className="text-primary text-lg md:text-xl font-bold">{offer.discountPrice} تومان</p>
+                  <p className="text-grey text-xs md:text-sm line-through">{offer.originalPrice}</p>
                 </div>
               </div>
             </div>

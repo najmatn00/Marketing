@@ -301,13 +301,13 @@ export default function ProductPage() {
 
       <main>
         {/* Product Details Section */}
-        <section className="bg-white py-20">
-          <div className="container mx-auto px-6" dir="rtl">
-            <div className="grid md:grid-cols-2 gap-16">
+        <section className="bg-white py-8 md:py-12 lg:py-20">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16">
               {/* Right Side - Images */}
               <div>
                 {/* Main Image */}
-                <div className="aspect-square bg-light-grey rounded-3xl overflow-hidden shadow-2xl mb-6">
+                <div className="aspect-square bg-light-grey rounded-2xl md:rounded-3xl overflow-hidden shadow-xl md:shadow-2xl mb-4 md:mb-6">
                   <img
                     src={product.images[selectedImage]}
                     alt={product.name}
@@ -316,7 +316,7 @@ export default function ProductPage() {
                 </div>
 
                 {/* Thumbnail Images */}
-                <div className="flex gap-4">
+                <div className="flex gap-2 md:gap-4">
                   {product.images.map((image: string, index: number) => (
                     <button
                       key={index}
@@ -336,27 +336,27 @@ export default function ProductPage() {
               </div>
 
               {/* Left Side - Product Info */}
-              <div className="text-right space-y-6">
+              <div className="text-right space-y-4 md:space-y-6">
                 {/* Title */}
-                <h1 className="text-4xl font-bold text-dark-blue">
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue">
                   {product.name}
                 </h1>
 
                 {/* Discount Badge */}
                 {product.discount > 0 && (
-                  <div className="inline-block bg-primary text-white px-6 py-2 rounded-full text-lg font-bold">
+                  <div className="inline-block bg-primary text-white px-4 py-1.5 md:px-6 md:py-2 rounded-full text-base md:text-lg font-bold">
                     {product.discount}% تخفیف
                   </div>
                 )}
 
                 {/* Price */}
-                <div className="space-y-2">
+                <div className="space-y-1 md:space-y-2">
                   {product.originalPrice && (
-                    <p className="text-grey text-2xl line-through">
+                    <p className="text-grey text-lg md:text-xl lg:text-2xl line-through">
                       {product.originalPrice} تومان
                     </p>
                   )}
-                  <p className="text-primary text-5xl font-bold">
+                  <p className="text-primary text-3xl md:text-4xl lg:text-5xl font-bold">
                     {product.discountPrice} تومان
                   </p>
                 </div>
@@ -379,52 +379,52 @@ export default function ProductPage() {
                 </div>
 
                 {/* Description */}
-                <div className="border-t border-light-grey pt-6">
-                  <h3 className="text-2xl font-bold text-dark-blue mb-4">
+                <div className="border-t border-light-grey pt-4 md:pt-6">
+                  <h3 className="text-xl md:text-2xl font-bold text-dark-blue mb-3 md:mb-4">
                     توضیحات محصول
                   </h3>
-                  <p className="text-grey text-lg leading-loose">
+                  <p className="text-grey text-sm md:text-base lg:text-lg leading-loose">
                     {product.description}
                   </p>
                 </div>
 
                 {/* Features */}
-                <div className="border-t border-light-grey pt-6">
-                  <h3 className="text-2xl font-bold text-dark-blue mb-4">
+                <div className="border-t border-light-grey pt-4 md:pt-6">
+                  <h3 className="text-xl md:text-2xl font-bold text-dark-blue mb-3 md:mb-4">
                     ویژگی‌های محصول
                   </h3>
-                  <ul className="space-y-3">
+                  <ul className="space-y-2 md:space-y-3">
                     {product.features.map((feature: string, index: number) => (
-                      <li key={index} className="flex items-center gap-3">
-                        <svg className="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <li key={index} className="flex items-center gap-2 md:gap-3">
+                        <svg className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>
-                        <span className="text-dark-blue text-lg">{feature}</span>
+                        <span className="text-dark-blue text-sm md:text-base lg:text-lg">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* Quantity Selector */}
-                <div className="flex items-center gap-6 border-t border-light-grey pt-6">
-                  <span className="text-dark-blue font-semibold text-lg">تعداد:</span>
-                  <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 md:gap-6 border-t border-light-grey pt-4 md:pt-6">
+                  <span className="text-dark-blue font-semibold text-base md:text-lg">تعداد:</span>
+                  <div className="flex items-center gap-3 md:gap-4">
                     <button
                       onClick={increaseQuantity}
-                      className="w-12 h-12 bg-light-grey rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                      className="w-10 h-10 md:w-12 md:h-12 bg-light-grey rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>
                     </button>
-                    <span className="text-2xl font-bold text-dark-blue w-12 text-center">
+                    <span className="text-xl md:text-2xl font-bold text-dark-blue w-10 md:w-12 text-center">
                       {quantity}
                     </span>
                     <button
                       onClick={decreaseQuantity}
-                      className="w-12 h-12 bg-light-grey rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all"
+                      className="w-10 h-10 md:w-12 md:h-12 bg-light-grey rounded-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all"
                     >
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                       </svg>
                     </button>
@@ -432,18 +432,18 @@ export default function ProductPage() {
                 </div>
 
                 {/* Add to Cart Button */}
-                <button className="w-full py-5 bg-primary text-white text-2xl font-bold rounded-2xl hover:bg-opacity-90 hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
+                <button className="w-full py-4 md:py-5 bg-primary text-white text-lg md:text-xl lg:text-2xl font-bold rounded-xl md:rounded-2xl hover:bg-opacity-90 hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
                   افزودن به سبد خرید
                 </button>
               </div>
             </div>
 
             {/* Specifications Table */}
-            <div className="mt-20">
-              <h2 className="text-4xl font-bold text-dark-blue mb-8 text-right">
+            <div className="mt-12 md:mt-16 lg:mt-20">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue mb-6 md:mb-8 text-right">
                 مشخصات فنی
               </h2>
-              <div className="bg-light-mint rounded-3xl overflow-hidden">
+              <div className="bg-light-mint rounded-2xl md:rounded-3xl overflow-hidden">
                 <table className="w-full" dir="rtl">
                   <tbody>
                     {product.specifications.map((spec: { label: string; value: string }, index: number) => (
@@ -451,10 +451,10 @@ export default function ProductPage() {
                         key={index}
                         className={index % 2 === 0 ? 'bg-white' : 'bg-light-mint'}
                       >
-                        <td className="px-8 py-5 text-dark-blue font-bold text-lg border-l-2 border-light-grey w-1/3">
+                        <td className="px-4 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 text-dark-blue font-bold text-sm md:text-base lg:text-lg border-l-2 border-light-grey w-1/3">
                           {spec.label}
                         </td>
-                        <td className="px-8 py-5 text-grey text-lg">
+                        <td className="px-4 md:px-6 lg:px-8 py-3 md:py-4 lg:py-5 text-grey text-sm md:text-base lg:text-lg">
                           {spec.value}
                         </td>
                       </tr>

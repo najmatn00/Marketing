@@ -132,13 +132,13 @@ export default function CategoryPage() {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-light-mint py-12">
-          <div className="container mx-auto px-6" dir="rtl">
+        <section className="bg-light-mint py-8 md:py-12">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-dark-blue mb-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue mb-3 md:mb-4">
                 {currentCategory.name}
               </h1>
-              <p className="text-grey text-lg max-w-2xl mx-auto">
+              <p className="text-grey text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
                 {currentCategory.description}
               </p>
             </div>
@@ -146,9 +146,9 @@ export default function CategoryPage() {
         </section>
 
         {/* Breadcrumb */}
-        <section className="bg-white py-4 border-b border-light-grey">
-          <div className="container mx-auto px-6" dir="rtl">
-            <div className="flex items-center gap-2 text-sm">
+        <section className="bg-white py-3 md:py-4 border-b border-light-grey">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
+            <div className="flex items-center gap-2 text-xs md:text-sm">
               <button
                 onClick={() => router.push('/')}
                 className="text-grey hover:text-primary transition-colors"
@@ -169,9 +169,9 @@ export default function CategoryPage() {
         </section>
 
         {/* Main Content with Sidebar */}
-        <section className="bg-white py-8">
-          <div className="container mx-auto px-6" dir="rtl">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <section className="bg-white py-6 md:py-8">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
               {/* Filter Sidebar - Right Side (1 column) */}
               <div className="lg:col-span-1 lg:order-1">
                 <FilterSidebar onFilterChange={handleFilterChange} hideCategories={true} />
@@ -180,15 +180,15 @@ export default function CategoryPage() {
               {/* Products Section - Left Side (3 columns) */}
               <div className="lg:col-span-3 lg:order-1">
                 {/* Sorting Bar */}
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-light-grey">
-                  <div className="text-dark-blue font-semibold">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 md:mb-8 pb-4 border-b border-light-grey gap-3">
+                  <div className="text-dark-blue font-semibold text-sm md:text-base">
                     {filteredProducts.length > 0
                       ? `${filteredProducts.length} محصول یافت شد (صفحه ${currentPage} از ${totalPages})`
                       : 'هیچ محصولی یافت نشد'
                     }
                   </div>
-                  <div className="flex gap-4">
-                    <select className="px-6 py-2 border-2 border-light-grey rounded-xl focus:border-primary focus:outline-none text-right">
+                  <div className="flex gap-3 md:gap-4 w-full sm:w-auto">
+                    <select className="px-4 md:px-6 py-2 text-sm md:text-base border-2 border-light-grey rounded-xl focus:border-primary focus:outline-none text-right flex-1 sm:flex-none">
                       <option>جدیدترین</option>
                       <option>پرفروش‌ترین</option>
                       <option>ارزان‌ترین</option>
@@ -198,13 +198,13 @@ export default function CategoryPage() {
                 </div>
 
                 {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                   {currentProducts.length > 0 ? (
                     currentProducts.map((product) => (
                       <div
                         key={product.id}
                         onClick={() => router.push(`/product/${product.id}`)}
-                        className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+                        className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
                       >
                         <div className="relative aspect-square bg-light-grey overflow-hidden">
                           <img
@@ -213,20 +213,20 @@ export default function CategoryPage() {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
                           {/* Discount badge */}
-                          <div className="absolute top-3 right-3 bg-primary text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                          <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-primary text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-bold shadow-lg">
                             {product.discount}%
                           </div>
                         </div>
 
-                        <div className="p-4 text-right">
-                          <h3 className="text-dark-blue font-semibold mb-3 text-base line-clamp-2">
+                        <div className="p-3 md:p-4 text-right">
+                          <h3 className="text-dark-blue font-semibold mb-2 md:mb-3 text-sm md:text-base line-clamp-2">
                             {product.name}
                           </h3>
                           <div className="flex items-center justify-between">
-                            <p className="text-primary text-lg font-bold">
+                            <p className="text-primary text-base md:text-lg font-bold">
                               {product.discountPriceFormatted} تومان
                             </p>
-                            <p className="text-grey text-sm line-through">
+                            <p className="text-grey text-xs md:text-sm line-through">
                               {product.originalPriceFormatted}
                             </p>
                           </div>
@@ -255,11 +255,11 @@ export default function CategoryPage() {
 
                 {/* Pagination */}
                 {totalPages > 1 && (
-                  <div className="flex justify-center items-center gap-2 mt-12">
+                  <div className="flex justify-center items-center flex-wrap gap-2 mt-8 md:mt-12">
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className={`px-4 py-2 rounded-lg border-2 transition-colors ${
+                      className={`px-3 md:px-4 py-2 text-sm md:text-base rounded-lg border-2 transition-colors ${
                         currentPage === 1
                           ? 'border-light-grey text-grey cursor-not-allowed'
                           : 'border-light-grey hover:border-primary hover:text-primary'
@@ -272,7 +272,7 @@ export default function CategoryPage() {
                       <button
                         key={page}
                         onClick={() => handlePageChange(page)}
-                        className={`px-4 py-2 rounded-lg font-bold transition-colors ${
+                        className={`px-3 md:px-4 py-2 text-sm md:text-base rounded-lg font-bold transition-colors ${
                           currentPage === page
                             ? 'bg-primary text-white'
                             : 'border-2 border-light-grey hover:border-primary hover:text-primary'
@@ -285,7 +285,7 @@ export default function CategoryPage() {
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className={`px-4 py-2 rounded-lg border-2 transition-colors ${
+                      className={`px-3 md:px-4 py-2 text-sm md:text-base rounded-lg border-2 transition-colors ${
                         currentPage === totalPages
                           ? 'border-light-grey text-grey cursor-not-allowed'
                           : 'border-light-grey hover:border-primary hover:text-primary'

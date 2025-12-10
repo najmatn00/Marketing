@@ -4,22 +4,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const menuItems = [
-  { label: 'پروفایل', href: '/admin/profile', icon: '👤' },
-  { label: 'جزو کاربی', href: '/admin/dashboard', icon: '📊' },
-  { label: 'محصولات', href: '/admin/products', icon: '📦' },
-  { label: 'سفارشات', href: '/admin/orders', icon: '🛒' },
-  { label: 'تبلیغات عروضه', href: '/admin/promotions', icon: '🎁' },
-  { label: 'پیک‌ها', href: '/admin/deliveries', icon: '🚚' },
+  { label: 'دید کلی ', href: '/admin/profile' },
+  { label: 'محصولات', href: '/admin/products' },
+  { label: 'سفارشات', href: '/admin/orders' },
+  { label: ' تنظیمات غرفه', href: '/admin/promotions'},
+  { label: 'تیکت', href: '/admin/deliveries' },
 ];
 
 export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-gray-700 text-white min-h-screen fixed right-0 top-0">
+    <aside className="w-64 bg-primary text-white min-h-screen fixed right-0 top-0">
       {/* Profile Section */}
-      <div className="p-6 bg-gray-600 text-center">
-        <h2 className="text-xl font-bold">پروفایل</h2>
+      <div className="p-6 text-white text-right">
+        <h2 className="text-xl font-bold">لوگو</h2>
       </div>
 
       {/* Navigation Menu */}
@@ -28,11 +27,11 @@ export default function AdminSidebar() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-3 px-6 py-4 hover:bg-gray-600 transition-colors ${
-              pathname === item.href ? 'bg-gray-800' : ''
+            className={`flex items-center gap-3 px-6 py-4 hover:bg-dark-blue transition-colors ${
+              pathname === item.href ? 'bg-dark-blue' : ''
             }`}
           >
-            <span className="text-xl">{item.icon}</span>
+            {/* <span className="text-xl">{item.icon}</span> */}
             <span className="text-base">{item.label}</span>
           </Link>
         ))}
@@ -40,7 +39,7 @@ export default function AdminSidebar() {
 
       {/* Logout */}
       <div className="absolute bottom-0 w-full">
-        <button className="w-full px-6 py-4 text-right hover:bg-gray-600 transition-colors text-red-400">
+        <button className="w-full px-6 py-4 text-right hover:bg-dark-blue transition-colors text-red-400">
           خروج از پنل
         </button>
       </div>

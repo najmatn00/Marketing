@@ -59,20 +59,20 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-white py-20 md:py-24">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-16 items-center" dir="rtl">
+    <section className="bg-white py-12 md:py-20 lg:py-24">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center" dir="rtl">
           {/* Left Side - Text Content */}
-          <div className="space-y-8 text-right">
-            <h1 className="text-5xl md:text-[30px] font-semibold text-dark-blue leading-tight">
+          <div className="space-y-4 md:space-y-6 lg:space-y-8 text-right">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-dark-blue leading-tight">
               {currentHero.title}
             </h1>
-            <p className="text-grey text-lg md:text-[16px] font-light leading-relaxed">
+            <p className="text-grey text-sm md:text-base lg:text-lg font-light leading-relaxed">
               {currentHero.description}
             </p>
             <button
               onClick={() => router.push(currentHero.buttonLink)}
-              className="px-10 py-4 bg-dark-blue text-white text-lg md:text-[18px] font-semibold rounded-xl hover:bg-opacity-90 hover:scale-105 transition-all shadow-xl hover:shadow-2xl"
+              className="px-6 py-3 md:px-8 md:py-3.5 lg:px-10 lg:py-4 bg-dark-blue text-white text-sm md:text-base lg:text-lg font-semibold rounded-xl hover:bg-opacity-90 hover:scale-105 transition-all shadow-xl hover:shadow-2xl"
             >
               {currentHero.buttonText}
             </button>
@@ -85,18 +85,18 @@ export default function Hero() {
               <>
                 <button
                   onClick={prevSlide}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg group"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg group"
                 >
-                  <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                  
+
                 </button>
                 <button
                   onClick={nextSlide}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg group"
-                > 
-                  <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-lg group"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>

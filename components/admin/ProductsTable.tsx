@@ -1,104 +1,105 @@
 'use client';
 
-import { useState } from 'react';
+import { Eye, Pencil, Trash2, ImageIcon } from 'lucide-react';
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   category: string;
-  price: number;
-  stock: number;
+  price: string;
+  stock: string;
   status: string;
+  seller: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
-const mockProducts: Product[] = [
-  { id: 1, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-  { id: 2, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-  { id: 3, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-  { id: 4, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-  { id: 5, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-  { id: 6, name: 'نام محصول', category: 'دسته‌بندی', price: 50000, stock: 10, status: 'واحدب کارید انبری' },
-];
+interface ProductsTableProps {
+  products: Product[];
+  onEdit: (product: Product) => void;
+  onDelete: (id: number) => void;
+  onView: (product: Product) => void;
+}
 
-export default function ProductsTable() {
-  const [products] = useState<Product[]>(mockProducts);
-  const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
-
-  const toggleSelectAll = () => {
-    if (selectedProducts.length === products.length) {
-      setSelectedProducts([]);
-    } else {
-      setSelectedProducts(products.map(p => p.id));
-    }
-  };
-
-  const toggleSelectProduct = (id: number) => {
-    if (selectedProducts.includes(id)) {
-      setSelectedProducts(selectedProducts.filter(pid => pid !== id));
-    } else {
-      setSelectedProducts([...selectedProducts, id]);
-    }
-  };
-
+export default function ProductsTable({ products, onEdit, onDelete, onView }: ProductsTableProps) {
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-grey">
       <table className="w-full" dir="rtl">
-        <thead className="bg-gray-600 text-white">
-          <tr>
-            <th className="p-4 text-center">
-              <input
-                type="checkbox"
-                checked={selectedProducts.length === products.length}
-                onChange={toggleSelectAll}
-                className="w-4 h-4"
-              />
-            </th>
-            <th className="p-4 text-right">#</th>
-            <th className="p-4 text-right">نام محصول</th>
-            <th className="p-4 text-right">دسته بندی</th>
-            <th className="p-4 text-right">تعداد</th>
-            <th className="p-4 text-right">مبلغ</th>
-            <th className="p-4 text-right">قیمت</th>
-            <th className="p-4 text-center">وضعیت</th>
+        <thead>
+          <tr className="bg-primary border-b border-grey">
+            <th className="p-4 text-right text-white font-semibold text-sm">#</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">نام محصول</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">دسته بندی</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">موجودی</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">قیمت</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">فروشنده</th>
+            <th className="p-4 text-right text-white font-semibold text-sm">وضعیت</th>
+            <th className="p-4 text-center text-white font-semibold text-sm"></th>
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => (
-            <tr key={product.id} className="border-b hover:bg-gray-50">
-              <td className="p-4 text-center">
-                <input
-                  type="checkbox"
-                  checked={selectedProducts.includes(product.id)}
-                  onChange={() => toggleSelectProduct(product.id)}
-                  className="w-4 h-4"
-                />
-              </td>
-              <td className="p-4">
-                <div className="w-12 h-12 bg-gray-300 rounded flex items-center justify-center">
-                  📷
-                </div>
-              </td>
-              <td className="p-4 text-right">{product.name}</td>
-              <td className="p-4 text-right">{product.category}</td>
-              <td className="p-4 text-right">{product.stock}</td>
-              <td className="p-4 text-right">مبلغ</td>
-              <td className="p-4 text-right">{product.price.toLocaleString('fa-IR')}</td>
-              <td className="p-4 text-center">
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-sm text-gray-600">{product.status}</span>
-                  <button className="text-blue-500 hover:text-blue-700" title="مشاهده">
-                    👁️
-                  </button>
-                  <button className="text-green-500 hover:text-green-700" title="ویرایش">
-                    ✏️
-                  </button>
-                  <button className="text-red-500 hover:text-red-700" title="حذف">
-                    🗑️
-                  </button>
-                </div>
+          {products.length === 0 ? (
+            <tr>
+              <td colSpan={8} className="p-8 text-center text-grey">
+                محصولی یافت نشد
               </td>
             </tr>
-          ))}
+          ) : (
+            products.map((product) => (
+              <tr key={product.id} className="border-b border-light-grey hover:bg-light-mint transition-colors">
+                <td className="p-4">
+                  <div className="w-12 h-12 bg-light-grey rounded flex items-center justify-center">
+                    <ImageIcon className="w-6 h-6 text-grey" />
+                  </div>
+                </td>
+                <td className="p-4 text-right text-dark-blue text-sm">{product.name}</td>
+                <td className="p-4 text-right text-dark-blue text-sm">{product.category}</td>
+                <td className="p-4 text-right text-dark-blue text-sm">{product.stock}</td>
+                <td className="p-4 text-right text-dark-blue text-sm">{product.price}</td>
+                <td className="p-4">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-semibold">
+                      {product.seller.firstName.charAt(0)}{product.seller.lastName.charAt(0)}
+                    </div>
+                    <span className="text-dark-blue text-sm">
+                      {product.seller.firstName} {product.seller.lastName}
+                    </span>
+                  </div>
+                </td>
+                <td className="p-4 text-right text-dark-blue text-sm">{product.status}</td>
+                <td className="p-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <button
+                      onClick={() => onView(product)}
+                      className="text-grey hover:text-primary transition-colors"
+                      title="مشاهده"
+                    >
+                      <Eye className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => onEdit(product)}
+                      className="text-grey hover:text-primary transition-colors"
+                      title="ویرایش"
+                    >
+                      <Pencil className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        if (confirm(`آیا از حذف "${product.name}" اطمینان دارید؟`)) {
+                          onDelete(product.id);
+                        }
+                      }}
+                      className="text-grey hover:text-red-500 transition-colors"
+                      title="حذف"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

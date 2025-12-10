@@ -26,27 +26,27 @@ export default function Categories() {
   ];
 
   return (
-    <section className="bg-white py-20">
-      <div className="container mx-auto px-6" dir="rtl">
-        <h2 className="text-4xl font-bold text-dark-blue mb-12 text-right">
+    <section className="bg-white py-12 md:py-16 lg:py-20">
+      <div className="container mx-auto px-4 md:px-6" dir="rtl">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue mb-8 md:mb-10 lg:mb-12 text-right">
           دسته بندی سایت
         </h2>
 
         {/* Horizontal scrollable container */}
         <div className="relative">
-          <div className="flex gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-4 md:gap-6 lg:gap-8 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory">
             {categories.map((category) => (
               <div
                 key={category.id}
                 onClick={() => handleCategoryClick(category.id)}
-                className="flex flex-col items-center gap-4 group cursor-pointer snap-start scrollbar-hide"
+                className="flex flex-col items-center gap-3 md:gap-4 group cursor-pointer snap-start scrollbar-hide"
               >
-                <div className="w-24 h-24 bg-light-grey rounded-full flex items-center justify-center group-hover:bg-light-mint group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl">
-                  <svg className="w-12 h-12 text-grey group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-light-grey rounded-full flex items-center justify-center group-hover:bg-light-mint group-hover:scale-110 transition-all duration-300 shadow-lg group-hover:shadow-xl">
+                  <svg className="w-10 h-10 md:w-12 md:h-12 text-grey group-hover:text-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={category.icon} />
                   </svg>
                 </div>
-                <span className="text-sm text-dark-blue text-center font-medium group-hover:text-primary transition-colors w-24">
+                <span className="text-xs md:text-sm text-dark-blue text-center font-medium group-hover:text-primary transition-colors w-20 md:w-24">
                   {category.name}
                 </span>
               </div>

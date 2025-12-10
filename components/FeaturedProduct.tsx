@@ -56,25 +56,25 @@ export default function FeaturedProduct() {
   const currentProduct = products[currentIndex];
 
   return (
-    <section className="bg-white py-20">
-  <div className="container mx-auto px-6" dir="rtl">
+    <section className="bg-white py-12 md:py-16 lg:py-20">
+  <div className="container mx-auto px-4 md:px-6" dir="rtl">
 
     {/* Title - centered */}
-    <h2 className="text-4xl font-bold text-dark-blue text-center mb-16">
+    <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue text-center mb-8 md:mb-12 lg:mb-16">
       تخفیفات ویژه
     </h2>
 
-    <div className="relative flex items-center ">
+    <div className="relative flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
 
-      {/* Navigation arrows - LEFT SIDE outside the card */}
-      <div className="absolute left-36 top-1/2 -translate-y-1/2 flex flex-col gap-4">
+      {/* Navigation arrows - Mobile: Below, Desktop: LEFT SIDE */}
+      <div className="flex md:flex-col gap-3 md:gap-4 order-2 md:order-1 md:absolute md:left-4 lg:left-36 md:top-1/2 md:-translate-y-1/2">
         <button
           onClick={handlePrev}
-          className="w-14 h-14 bg-white border-2 border-light-grey rounded-2xl 
-          flex items-center justify-center hover:border-primary hover:bg-primary 
+          className="w-12 h-12 md:w-14 md:h-14 bg-white border-2 border-light-grey rounded-2xl
+          flex items-center justify-center hover:border-primary hover:bg-primary
           hover:text-white transition-all shadow-md hover:shadow-lg group"
         >
-          <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors" fill="none"
+          <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors rotate-90 md:rotate-0" fill="none"
             stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
           </svg>
@@ -82,52 +82,53 @@ export default function FeaturedProduct() {
 
         <button
           onClick={handleNext}
-          className="w-14 h-14 bg-white border-2 border-light-grey rounded-2xl 
-          flex items-center justify-center hover:border-primary hover:bg-primary 
+          className="w-12 h-12 md:w-14 md:h-14 bg-white border-2 border-light-grey rounded-2xl
+          flex items-center justify-center hover:border-primary hover:bg-primary
           hover:text-white transition-all shadow-md hover:shadow-lg group"
         >
-          <svg className="w-6 h-6 text-dark-blue group-hover:text-white transition-colors"
+          <svg className="w-5 h-5 md:w-6 md:h-6 text-dark-blue group-hover:text-white transition-colors rotate-90 md:rotate-0"
             fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </button>
       </div>
-       <div className="w-[451px] h-[607px] bg-primary rounded-[16px]  overflow-hidden shadow-md 
-        group-hover:scale-105 transition-transform duration-300">
-        
+
+      {/* Content Stack - Mobile: Column, Desktop: Overlapping */}
+      <div className="w-full md:w-auto flex flex-col md:flex-row items-center justify-center order-1 md:order-2">
+        {/* Background Purple Box */}
+        <div className="hidden md:block md:w-[300px] lg:w-[451px] md:h-[400px] lg:h-[607px] bg-primary rounded-2xl overflow-hidden shadow-md">
         </div>
-         
-         <div className="w-[541px] h-[302px] bg-white rounded-[8px] -mr-[14%] overflow-hidden shadow-md 
-        group-hover:scale-105 transition-transform duration-300">
+
+        {/* Product Image */}
+        <div className="w-full md:w-[360px] lg:w-[541px] h-[250px] md:h-[200px] lg:h-[302px] bg-white rounded-2xl md:-mr-[14%] overflow-hidden shadow-md">
           <img
             src={currentProduct.image}
             alt={currentProduct.name}
             className="w-full h-full object-cover"
           />
         </div>
-      <div
-        onClick={() => router.push(`/product/${currentProduct.id}`)}
-        className="bg-light-mint rounded-[8px] shadow-xl hover:shadow-2xl transition-all -mr-[10%]
-        duration-300 cursor-pointer group h-[142px] w-[540px] max-w-full p-10 flex items-center gap-12"
-      >
-       
-        {/* Product Info - LEFT side of card */}
-        <div className="flex-1 text-right">
-          <h3 className="text-[16px] font-medium text-dark-blue mb-2">
-            {currentProduct.name}
-          </h3>
 
-          <p className="text-grey text-[14px] font-light line-through mb-1">
-            {currentProduct.originalPrice} تومان
-          </p>
+        {/* Product Info Card */}
+        <div
+          onClick={() => router.push(`/product/${currentProduct.id}`)}
+          className="bg-light-mint rounded-2xl shadow-xl hover:shadow-2xl transition-all
+          duration-300 cursor-pointer group w-full md:w-[360px] lg:w-[540px] md:-mr-[10%] p-6 md:p-8 lg:p-10 flex items-center"
+        >
+          {/* Product Info */}
+          <div className="flex-1 text-right">
+            <h3 className="text-sm md:text-base font-medium text-dark-blue mb-2">
+              {currentProduct.name}
+            </h3>
 
-          <p className="text-dark-blue text-[20px] font-medium">
-            {currentProduct.discountPrice} تومان
-          </p>
+            <p className="text-grey text-xs md:text-sm font-light line-through mb-1">
+              {currentProduct.originalPrice} تومان
+            </p>
+
+            <p className="text-dark-blue text-lg md:text-xl font-medium">
+              {currentProduct.discountPrice} تومان
+            </p>
+          </div>
         </div>
-
-       
-       
       </div>
     </div>
 

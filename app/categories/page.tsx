@@ -60,13 +60,13 @@ export default function CategoriesPage() {
 
       <main>
         {/* Hero Section */}
-        <section className="bg-light-mint py-12">
-          <div className="container mx-auto px-6" dir="rtl">
+        <section className="bg-light-mint py-8 md:py-12">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-dark-blue mb-4">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue mb-3 md:mb-4">
                 دسته بندی محصولات
               </h1>
-              <p className="text-grey text-lg max-w-2xl mx-auto">
+              <p className="text-grey text-sm md:text-base lg:text-lg max-w-2xl mx-auto">
                 تمامی دسته‌بندی‌های محصولات ما را مشاهده کنید
               </p>
             </div>
@@ -74,9 +74,9 @@ export default function CategoriesPage() {
         </section>
 
         {/* Main Content with Sidebar */}
-        <section className="bg-white py-8">
-          <div className="container mx-auto px-6" dir="rtl">
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <section className="bg-white py-6 md:py-8">
+          <div className="container mx-auto px-4 md:px-6" dir="rtl">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
               {/* Filter Sidebar - Right Side (1 column) */}
               <div className="lg:col-span-1 lg:order-1">
                 <FilterSidebar onFilterChange={handleFilterChange} />
@@ -85,20 +85,20 @@ export default function CategoriesPage() {
               {/* Categories Section - Left Side (3 columns) */}
               <div className="lg:col-span-3 lg:order-1">
                 {/* Count Bar */}
-                <div className="flex items-center justify-between mb-8 pb-4 border-b border-light-grey">
-                  <div className="text-dark-blue font-semibold text-lg">
+                <div className="flex items-center justify-between mb-6 md:mb-8 pb-4 border-b border-light-grey">
+                  <div className="text-dark-blue font-semibold text-base md:text-lg">
                     {filteredCategories.length} دسته بندی یافت شد
                   </div>
                 </div>
 
                 {/* Categories Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {filteredCategories.length > 0 ? (
                     filteredCategories.map((category) => (
                       <div
                         key={category.id}
                         onClick={() => router.push(`/category/${category.id}`)}
-                        className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+                        className="bg-white rounded-2xl md:rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group"
                       >
                         {/* Category Image */}
                         <div className="aspect-square bg-light-grey overflow-hidden relative">
@@ -108,14 +108,14 @@ export default function CategoriesPage() {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
                           {/* Product Count Badge */}
-                          <div className="absolute top-4 right-4 bg-primary text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                          <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-primary text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold shadow-lg">
                             {category.count} محصول
                           </div>
                         </div>
 
                         {/* Category Info */}
-                        <div className="p-6 text-center">
-                          <h3 className="text-dark-blue font-bold text-xl group-hover:text-primary transition-colors">
+                        <div className="p-4 md:p-6 text-center">
+                          <h3 className="text-dark-blue font-bold text-lg md:text-xl group-hover:text-primary transition-colors">
                             {category.name}
                           </h3>
                         </div>

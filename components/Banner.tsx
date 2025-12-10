@@ -37,10 +37,10 @@ export default function Banner() {
   ];
 
   return (
-    <section className="bg-white py-10">
-      <div className="container mx-auto px-6" dir="rtl">
+    <section className="bg-white py-6 md:py-10">
+      <div className="container mx-auto px-4 md:px-6" dir="rtl">
         {/* Main Banner */}
-        <div className="relative bg-grey rounded-[2rem] overflow-hidden min-h-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+        <div className="relative bg-grey rounded-2xl md:rounded-[2rem] overflow-hidden min-h-[180px] md:min-h-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
           onClick={() => router.push(banners[0].link)}
         >
           {/* Background Image */}
@@ -51,13 +51,13 @@ export default function Banner() {
           />
 
           {/* Content Overlay */}
-          <div className="relative z-10 p-12 flex items-center justify-center">
+          <div className="relative z-10 p-6 md:p-10 lg:p-12 flex items-center justify-center">
             <div className="text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">
                 {banners[0].title}
               </h2>
               {banners[0].subtitle && (
-                <p className="text-white text-xl mb-6 opacity-90">
+                <p className="text-white text-sm md:text-lg lg:text-xl mb-4 md:mb-6 opacity-90">
                   {banners[0].subtitle}
                 </p>
               )}
@@ -66,7 +66,7 @@ export default function Banner() {
                   e.stopPropagation();
                   router.push(banners[0].link);
                 }}
-                className="px-8 py-3 bg-white text-dark-blue font-bold rounded-xl hover:bg-light-mint hover:text-primary transition-all shadow-md hover:shadow-lg"
+                className="px-6 py-2.5 md:px-8 md:py-3 bg-white text-dark-blue text-sm md:text-base font-bold rounded-xl hover:bg-light-mint hover:text-primary transition-all shadow-md hover:shadow-lg"
               >
                 {banners[0].buttonText}
               </button>
