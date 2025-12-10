@@ -7,8 +7,8 @@ const menuItems = [
   { label: 'دید کلی ', href: '/admin/profile' },
   { label: 'محصولات', href: '/admin/products' },
   { label: 'سفارشات', href: '/admin/orders' },
-  { label: ' تنظیمات غرفه', href: '/admin/promotions'},
-  { label: 'تیکت', href: '/admin/deliveries' },
+  { label: ' تنظیمات غرفه', href: '/admin/boothSettings'},
+  { label: 'تیکت', href: '/admin/tickets' },
 ];
 
 export default function AdminSidebar() {
