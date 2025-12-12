@@ -11,11 +11,12 @@ export default function ConditionalLayout({
 }) {
   const pathname = usePathname();
 
-  // Check if current route is an admin route
+  // Check if current route is an admin or visitor route
   const isAdminRoute = pathname?.startsWith('/admin');
+  const isVisitorRoute = pathname?.startsWith('/visitor');
 
-  // If it's an admin route, render children without Header and Footer
-  if (isAdminRoute) {
+  // If it's an admin or visitor route, render children without Header and Footer
+  if (isAdminRoute || isVisitorRoute) {
     return <>{children}</>;
   }
 
