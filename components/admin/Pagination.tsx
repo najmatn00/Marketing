@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationProps {
   currentPage: number;
@@ -8,7 +8,11 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   return (
     <div className="flex items-center justify-center gap-2 mt-6" dir="ltr">
       <button
@@ -26,8 +30,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           onClick={() => onPageChange(page)}
           className={`px-4 py-2 rounded transition-colors ${
             currentPage === page
-              ? 'bg-primary text-white font-semibold'
-              : 'border border-grey text-dark-blue hover:bg-light-mint'
+              ? "bg-primary text-text-color font-semibold"
+              : "border border-grey text-dark-blue hover:bg-light-mint"
           }`}
         >
           {page}

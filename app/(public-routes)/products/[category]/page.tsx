@@ -1,8 +1,8 @@
-'use client';
-import { useParams } from 'next/navigation';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import SpecialOffers from '@/components/SpecialOffers';
+"use client";
+import { useParams } from "next/navigation";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SpecialOffers from "@/components/SpecialOffers";
 
 export default function ProductCategoryPage() {
   const params = useParams();
@@ -11,38 +11,40 @@ export default function ProductCategoryPage() {
   // Fake category data - replace with API call later
   const categoryData: Record<string, { title: string; description: string }> = {
     electronics: {
-      title: 'محصولات الکترونیک',
-      description: 'جدیدترین و بهترین محصولات الکترونیک را با قیمت های باورنکردنی از ما بخرید'
+      title: "محصولات الکترونیک",
+      description:
+        "جدیدترین و بهترین محصولات الکترونیک را با قیمت های باورنکردنی از ما بخرید",
     },
     fashion: {
-      title: 'مد و پوشاک',
-      description: 'بهترین برندهای مد و پوشاک با تخفیفات ویژه'
+      title: "مد و پوشاک",
+      description: "بهترین برندهای مد و پوشاک با تخفیفات ویژه",
     },
     home: {
-      title: 'لوازم خانگی',
-      description: 'تمامی لوازم خانگی مورد نیاز خود را با قیمت های استثنایی تهیه کنید'
-    }
+      title: "لوازم خانگی",
+      description:
+        "تمامی لوازم خانگی مورد نیاز خود را با قیمت های استثنایی تهیه کنید",
+    },
   };
 
   const currentCategory = categoryData[category] || {
-    title: 'محصولات',
-    description: 'مشاهده تمامی محصولات'
+    title: "محصولات",
+    description: "مشاهده تمامی محصولات",
   };
 
   // Fake products - replace with API call later
-  const products = Array(12).fill(null).map((_, i) => ({
-    id: i + 1,
-    name: `محصول شماره ${i + 1}`,
-    originalPrice: '۲۵۰،۰۰۰',
-    discountPrice: '۱۸۰،۰۰۰',
-    discount: 30,
-    image: '/images/B2B.webp'
-  }));
+  const products = Array(12)
+    .fill(null)
+    .map((_, i) => ({
+      id: i + 1,
+      name: `محصول شماره ${i + 1}`,
+      originalPrice: "۲۵۰،۰۰۰",
+      discountPrice: "۱۸۰،۰۰۰",
+      discount: 30,
+      image: "/images/B2B.webp",
+    }));
 
   return (
     <div className="min-h-screen bg-white">
-     
-
       <main>
         {/* Hero Section */}
         <section className="bg-light-mint py-12 md:py-16 lg:py-20">
@@ -74,7 +76,7 @@ export default function ProductCategoryPage() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                     {/* Discount badge */}
-                    <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-primary text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-bold shadow-lg">
+                    <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-primary text-text-color px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm font-bold shadow-lg">
                       {product.discount}%
                     </div>
                   </div>
@@ -101,8 +103,6 @@ export default function ProductCategoryPage() {
         {/* Special Offers Section */}
         <SpecialOffers />
       </main>
-
-    
     </div>
   );
 }

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Eye, Pencil, Trash2, ImageIcon } from 'lucide-react';
+import { Eye, Pencil, Trash2, ImageIcon } from "lucide-react";
 
 export interface Product {
   id: number;
@@ -22,20 +22,39 @@ interface ProductsTableProps {
   onView: (product: Product) => void;
 }
 
-export default function ProductsTable({ products, onEdit, onDelete, onView }: ProductsTableProps) {
+export default function ProductsTable({
+  products,
+  onEdit,
+  onDelete,
+  onView,
+}: ProductsTableProps) {
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-grey">
       <table className="w-full" dir="rtl">
         <thead>
           <tr className="bg-primary border-b border-grey">
-            <th className="p-4 text-right text-white font-semibold text-sm">#</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">نام محصول</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">دسته بندی</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">موجودی</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">قیمت</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">فروشنده</th>
-            <th className="p-4 text-right text-white font-semibold text-sm">وضعیت</th>
-            <th className="p-4 text-center text-white font-semibold text-sm"></th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              #
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              نام محصول
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              دسته بندی
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              موجودی
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              قیمت
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              فروشنده
+            </th>
+            <th className="p-4 text-right text-text-color font-semibold text-sm">
+              وضعیت
+            </th>
+            <th className="p-4 text-center text-text-color font-semibold text-sm"></th>
           </tr>
         </thead>
         <tbody>
@@ -47,27 +66,41 @@ export default function ProductsTable({ products, onEdit, onDelete, onView }: Pr
             </tr>
           ) : (
             products.map((product) => (
-              <tr key={product.id} className="border-b border-light-grey hover:bg-light-mint transition-colors">
+              <tr
+                key={product.id}
+                className="border-b border-light-grey hover:bg-light-mint transition-colors"
+              >
                 <td className="p-4">
                   <div className="w-12 h-12 bg-light-grey rounded flex items-center justify-center">
                     <ImageIcon className="w-6 h-6 text-grey" />
                   </div>
                 </td>
-                <td className="p-4 text-right text-dark-blue text-sm">{product.name}</td>
-                <td className="p-4 text-right text-dark-blue text-sm">{product.category}</td>
-                <td className="p-4 text-right text-dark-blue text-sm">{product.stock}</td>
-                <td className="p-4 text-right text-dark-blue text-sm">{product.price}</td>
+                <td className="p-4 text-right text-dark-blue text-sm">
+                  {product.name}
+                </td>
+                <td className="p-4 text-right text-dark-blue text-sm">
+                  {product.category}
+                </td>
+                <td className="p-4 text-right text-dark-blue text-sm">
+                  {product.stock}
+                </td>
+                <td className="p-4 text-right text-dark-blue text-sm">
+                  {product.price}
+                </td>
                 <td className="p-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white text-xs font-semibold">
-                      {product.seller.firstName.charAt(0)}{product.seller.lastName.charAt(0)}
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-text-color text-xs font-semibold">
+                      {product.seller.firstName.charAt(0)}
+                      {product.seller.lastName.charAt(0)}
                     </div>
                     <span className="text-dark-blue text-sm">
                       {product.seller.firstName} {product.seller.lastName}
                     </span>
                   </div>
                 </td>
-                <td className="p-4 text-right text-dark-blue text-sm">{product.status}</td>
+                <td className="p-4 text-right text-dark-blue text-sm">
+                  {product.status}
+                </td>
                 <td className="p-4">
                   <div className="flex items-center justify-center gap-3">
                     <button
@@ -86,7 +119,9 @@ export default function ProductsTable({ products, onEdit, onDelete, onView }: Pr
                     </button>
                     <button
                       onClick={() => {
-                        if (confirm(`آیا از حذف "${product.name}" اطمینان دارید؟`)) {
+                        if (
+                          confirm(`آیا از حذف "${product.name}" اطمینان دارید؟`)
+                        ) {
                           onDelete(product.id);
                         }
                       }}

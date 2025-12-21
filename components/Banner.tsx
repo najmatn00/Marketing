@@ -1,6 +1,6 @@
-'use client';
-import React from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function Banner() {
   const router = useRouter();
@@ -9,38 +9,39 @@ export default function Banner() {
   const banners = [
     {
       id: 1,
-      title: 'بنر برای جذب بازاریاب',
-      subtitle: 'به تیم ما بپیوندید و درآمد داشته باشید',
-      buttonText: 'اطلاعات بیشتر',
-      link: '/marketing',
-      bgColor: 'bg-grey',
-      image: '/images/B2B.webp'
+      title: "بنر برای جذب بازاریاب",
+      subtitle: "به تیم ما بپیوندید و درآمد داشته باشید",
+      buttonText: "اطلاعات بیشتر",
+      link: "/marketing",
+      bgColor: "bg-grey",
+      image: "/images/B2B.webp",
     },
     {
       id: 2,
-      title: 'فروش ویژه محصولات',
-      subtitle: 'تخفیفات باورنکردنی تا ۵۰ درصد',
-      buttonText: 'مشاهده محصولات',
-      link: '/offers',
-      bgColor: 'bg-primary',
-      image: '/images/B2B.webp'
+      title: "فروش ویژه محصولات",
+      subtitle: "تخفیفات باورنکردنی تا ۵۰ درصد",
+      buttonText: "مشاهده محصولات",
+      link: "/offers",
+      bgColor: "bg-primary",
+      image: "/images/B2B.webp",
     },
     {
       id: 3,
-      title: 'ارسال رایگان',
-      subtitle: 'برای خریدهای بالای ۵۰۰ هزار تومان',
-      buttonText: 'خرید کنید',
-      link: '/shop',
-      bgColor: 'bg-dark-blue',
-      image: '/images/B2B.webp'
-    }
+      title: "ارسال رایگان",
+      subtitle: "برای خریدهای بالای ۵۰۰ هزار تومان",
+      buttonText: "خرید کنید",
+      link: "/shop",
+      bgColor: "bg-dark-blue",
+      image: "/images/B2B.webp",
+    },
   ];
 
   return (
     <section className="bg-white py-6 md:py-10">
       <div className="container mx-auto px-4 md:px-6" dir="rtl">
         {/* Main Banner */}
-        <div className="relative bg-grey rounded-2xl md:rounded-[2rem] overflow-hidden min-h-[180px] md:min-h-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+        <div
+          className="relative bg-grey rounded-2xl md:rounded-[2rem] overflow-hidden min-h-[180px] md:min-h-[200px] shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer"
           onClick={() => router.push(banners[0].link)}
         >
           {/* Background Image */}
@@ -53,11 +54,11 @@ export default function Banner() {
           {/* Content Overlay */}
           <div className="relative z-10 p-6 md:p-10 lg:p-12 flex items-center justify-center">
             <div className="text-center">
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-white mb-3 md:mb-4">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-text-color mb-3 md:mb-4">
                 {banners[0].title}
               </h2>
               {banners[0].subtitle && (
-                <p className="text-white text-sm md:text-lg lg:text-xl mb-4 md:mb-6 opacity-90">
+                <p className="text-text-color text-sm md:text-lg lg:text-xl mb-4 md:mb-6 opacity-90">
                   {banners[0].subtitle}
                 </p>
               )}
@@ -82,13 +83,13 @@ export default function Banner() {
               onClick={() => router.push(banner.link)}
               className={`${banner.bgColor} rounded-2xl p-8 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-lg`}
             >
-              <h3 className="text-2xl font-bold text-white mb-3">
+              <h3 className="text-2xl font-bold text-text-color mb-3">
                 {banner.title}
               </h3>
-              <p className="text-white opacity-90 mb-4">
+              <p className="text-text-color opacity-90 mb-4">
                 {banner.subtitle}
               </p>
-              <span className="text-white font-semibold underline">
+              <span className="text-text-color font-semibold underline">
                 {banner.buttonText}
               </span>
             </div>

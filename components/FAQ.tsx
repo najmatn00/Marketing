@@ -1,5 +1,5 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 
 interface FAQItem {
   id: number;
@@ -14,29 +14,39 @@ export default function FAQ() {
   const faqs: FAQItem[] = [
     {
       id: 1,
-      question: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      answer: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.'
+      question:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است",
+      answer:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
     },
     {
       id: 2,
-      question: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      answer: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.'
+      question:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است",
+      answer:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.",
     },
     {
       id: 3,
-      question: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      answer: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.'
+      question:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است",
+      answer:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
     },
     {
       id: 4,
-      question: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      answer: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.'
+      question:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است",
+      answer:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است.",
     },
     {
       id: 5,
-      question: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-      answer: 'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.'
-    }
+      question:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است",
+      answer:
+        "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.",
+    },
   ];
 
   const toggleFAQ = (index: number) => {
@@ -62,7 +72,9 @@ export default function FAQ() {
             <div
               key={faq.id}
               className={`bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-lg transition-all duration-500 ${
-                openIndex === index ? 'shadow-2xl scale-[1.02]' : 'hover:shadow-xl'
+                openIndex === index
+                  ? "shadow-2xl scale-[1.02]"
+                  : "hover:shadow-xl"
               }`}
             >
               {/* Question Button */}
@@ -71,29 +83,41 @@ export default function FAQ() {
                 className="w-full p-4 md:p-6 lg:p-8 flex items-start justify-between text-right group"
               >
                 {/* Question Number Circle */}
-                <div className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center ml-3 md:ml-6 transition-all duration-300 ${
-                  openIndex === index
-                    ? 'bg-primary text-white scale-110'
-                    : 'bg-light-mint text-primary group-hover:scale-110'
-                }`}>
-                  <span className="font-bold text-base md:text-lg">{index + 1}</span>
+                <div
+                  className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center ml-3 md:ml-6 transition-all duration-300 ${
+                    openIndex === index
+                      ? "bg-primary text-text-color scale-110"
+                      : "bg-light-mint text-primary group-hover:scale-110"
+                  }`}
+                >
+                  <span className="font-bold text-base md:text-lg">
+                    {index + 1}
+                  </span>
                 </div>
 
-                <span className={`text-dark-blue font-semibold text-sm md:text-lg lg:text-xl flex-1 leading-relaxed transition-colors duration-300 ${
-                  openIndex === index ? 'text-primary' : 'group-hover:text-primary'
-                }`}>
+                <span
+                  className={`text-dark-blue font-semibold text-sm md:text-lg lg:text-xl flex-1 leading-relaxed transition-colors duration-300 ${
+                    openIndex === index
+                      ? "text-primary"
+                      : "group-hover:text-primary"
+                  }`}
+                >
                   {faq.question}
                 </span>
 
                 {/* Arrow Icon with Circle Background */}
-                <div className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                  openIndex === index
-                    ? 'bg-primary rotate-180'
-                    : 'bg-light-grey group-hover:bg-primary'
-                }`}>
+                <div
+                  className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    openIndex === index
+                      ? "bg-primary rotate-180"
+                      : "bg-light-grey group-hover:bg-primary"
+                  }`}
+                >
                   <svg
                     className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-300 ${
-                      openIndex === index ? 'text-white' : 'text-dark-blue group-hover:text-white'
+                      openIndex === index
+                        ? "text-text-color"
+                        : "text-dark-blue group-hover:text-text-color"
                     }`}
                     fill="none"
                     stroke="currentColor"
@@ -112,7 +136,9 @@ export default function FAQ() {
               {/* Answer - Expandable */}
               <div
                 className={`overflow-hidden transition-all duration-500 ${
-                  openIndex === index ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                  openIndex === index
+                    ? "max-h-[500px] opacity-100"
+                    : "max-h-0 opacity-0"
                 }`}
               >
                 <div className="px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8">

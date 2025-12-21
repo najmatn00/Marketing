@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { Search, Bell, Eye, Pencil, Trash2 } from 'lucide-react';
-import AdminSidebar from '@/components/admin/AdminSidebar';
-import Pagination from '@/components/admin/Pagination';
+import { useState, useMemo } from "react";
+import { Search, Bell, Eye, Pencil, Trash2 } from "lucide-react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import Pagination from "@/components/admin/Pagination";
 
 export interface Order {
   id: number;
@@ -17,27 +17,27 @@ export interface Order {
 const initialOrders: Order[] = [
   {
     id: 1,
-    buyer: 'سینا رضایی',
-    phone: '09120000001',
-    date: '1403/10/01',
-    finalPrice: 'مجموع قیمت',
-    status: 'در انتظار تأیید شده، ارسال نشده'
+    buyer: "سینا رضایی",
+    phone: "09120000001",
+    date: "1403/10/01",
+    finalPrice: "مجموع قیمت",
+    status: "در انتظار تأیید شده، ارسال نشده",
   },
   {
     id: 2,
-    buyer: 'محمد حسینی',
-    phone: '09120000002',
-    date: '1403/10/02',
-    finalPrice: 'مجموع قیمت',
-    status: 'در انتظار تأیید شده، ارسال نشده'
+    buyer: "محمد حسینی",
+    phone: "09120000002",
+    date: "1403/10/02",
+    finalPrice: "مجموع قیمت",
+    status: "در انتظار تأیید شده، ارسال نشده",
   },
   {
     id: 3,
-    buyer: 'زهرا احمدی',
-    phone: '09120000003',
-    date: '1403/10/03',
-    finalPrice: 'مجموع قیمت',
-    status: 'در انتظار تأیید شده، ارسال نشده'
+    buyer: "زهرا احمدی",
+    phone: "09120000003",
+    date: "1403/10/03",
+    finalPrice: "مجموع قیمت",
+    status: "در انتظار تأیید شده، ارسال نشده",
   },
 ];
 
@@ -46,7 +46,7 @@ const ITEMS_PER_PAGE = 8;
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredOrders = useMemo(() => {
     if (!searchQuery.trim()) return orders;
@@ -85,7 +85,9 @@ export default function AdminOrdersPage() {
       <main className="flex-1 mr-64 p-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-dark-blue">سفارشات ثبت شده شما</h1>
+          <h1 className="text-3xl font-bold text-dark-blue">
+            سفارشات ثبت شده شما
+          </h1>
 
           <div className="flex items-center gap-4">
             <button className="p-2 border border-dark-blue rounded-lg relative">
@@ -123,7 +125,7 @@ export default function AdminOrdersPage() {
         {/* Orders Table */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden border border-grey">
           <table className="w-full text-right">
-            <thead className="bg-primary text-white">
+            <thead className="bg-primary text-text-color">
               <tr>
                 <th className="p-3">خریدار</th>
                 <th className="p-3">شماره تماس</th>
@@ -136,7 +138,10 @@ export default function AdminOrdersPage() {
 
             <tbody>
               {paginatedOrders.map((order) => (
-                <tr key={order.id} className=" overflow-hidden border-b border-grey hover:bg-gray-50">
+                <tr
+                  key={order.id}
+                  className=" overflow-hidden border-b border-grey hover:bg-gray-50"
+                >
                   <td className="p-3">{order.buyer}</td>
                   <td className="p-3">{order.phone}</td>
                   <td className="p-3">{order.date}</td>

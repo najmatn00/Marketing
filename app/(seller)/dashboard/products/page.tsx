@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Product } from "@/types/api.types";
+import { Package, Plus } from "lucide-react";
 
 export default function ProductsPage() {
   // Mock data - will be replaced with API call
@@ -126,13 +127,18 @@ export default function ProductsPage() {
 
   const getStatusColor = (status: string) => {
     const colorMap: Record<string, string> = {
-      draft: "bg-gray-100 text-gray-800",
-      active: "bg-green-100 text-green-800",
-      inactive: "bg-red-100 text-red-800",
-      out_of_stock: "bg-yellow-100 text-yellow-800",
-      archived: "bg-gray-100 text-gray-600",
+      draft: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200",
+      active:
+        "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400",
+      inactive: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400",
+      out_of_stock:
+        "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400",
+      archived: "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400",
     };
-    return colorMap[status] || "bg-gray-100 text-gray-800";
+    return (
+      colorMap[status] ||
+      "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+    );
   };
 
   return (
@@ -140,66 +146,92 @@ export default function ProductsPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-xl font-light text-gray-900">محصولات</h2>
-          <p className="text-sm text-gray-500 mt-1">مدیریت محصولات فروشگاه</p>
+          <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
+            <Package className="w-6 h-6 text-primary" />
+            محصولات
+          </h2>
+          <p className="text-sm text-grey mt-1">مدیریت محصولات فروشگاه</p>
         </div>
-        <button className="px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
-          + افزودن محصول
+        <button className="px-6 py-3 bg-primary hover:bg-primary/90 text-text-color text-sm font-medium rounded-xl transition-all shadow-lg flex items-center gap-2">
+          <Plus className="w-4 h-4" />
+          افزودن محصول
         </button>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="border border-gray-200 p-4">
-          <p className="text-xs text-gray-500 mb-1">کل محصولات</p>
-          <p className="text-xl font-light text-gray-900">{formatNumber(products.length)}</p>
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey dark:border-gray-700 rounded-xl p-5 shadow-lg hover:shadow-xl transition-shadow">
+          <p className="text-xs text-grey mb-2">کل محصولات</p>
+          <p className="text-2xl font-bold text-foreground">
+            {formatNumber(products.length)}
+          </p>
         </div>
-        <div className="border border-gray-200 p-4">
-          <p className="text-xs text-gray-500 mb-1">فعال</p>
-          <p className="text-xl font-light text-gray-900">
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey dark:border-gray-700 rounded-xl p-5 shadow-lg hover:shadow-xl transition-shadow">
+          <p className="text-xs text-grey mb-2">فعال</p>
+          <p className="text-2xl font-bold text-green-600 dark:text-green-400">
             {formatNumber(products.filter((p) => p.status === "active").length)}
           </p>
         </div>
-        <div className="border border-gray-200 p-4">
-          <p className="text-xs text-gray-500 mb-1">ناموجود</p>
-          <p className="text-xl font-light text-gray-900">
-            {formatNumber(products.filter((p) => p.status === "out_of_stock").length)}
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey dark:border-gray-700 rounded-xl p-5 shadow-lg hover:shadow-xl transition-shadow">
+          <p className="text-xs text-grey mb-2">ناموجود</p>
+          <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+            {formatNumber(
+              products.filter((p) => p.status === "out_of_stock").length
+            )}
           </p>
         </div>
-        <div className="border border-gray-200 p-4">
-          <p className="text-xs text-gray-500 mb-1">کل فروش</p>
-          <p className="text-xl font-light text-gray-900">
-            {formatNumber(products.reduce((sum, p) => sum + (p.soldCount || 0), 0))}
+        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey dark:border-gray-700 rounded-xl p-5 shadow-lg hover:shadow-xl transition-shadow">
+          <p className="text-xs text-grey mb-2">کل فروش</p>
+          <p className="text-2xl font-bold text-primary">
+            {formatNumber(
+              products.reduce((sum, p) => sum + (p.soldCount || 0), 0)
+            )}
           </p>
         </div>
       </div>
 
       {/* Products List */}
-      <div className="border border-gray-200">
+      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey dark:border-gray-700 rounded-xl overflow-hidden shadow-lg">
         {/* Table Header */}
-        <div className="hidden md:grid md:grid-cols-12 gap-4 p-4 border-b border-gray-200 bg-gray-50">
-          <div className="col-span-4 text-xs font-medium text-gray-700">نام محصول</div>
-          <div className="col-span-2 text-xs font-medium text-gray-700">قیمت</div>
-          <div className="col-span-1 text-xs font-medium text-gray-700">موجودی</div>
-          <div className="col-span-1 text-xs font-medium text-gray-700">فروش</div>
-          <div className="col-span-2 text-xs font-medium text-gray-700">امتیاز</div>
-          <div className="col-span-2 text-xs font-medium text-gray-700">وضعیت</div>
+        <div className="hidden md:grid md:grid-cols-12 gap-4 p-4 border-b border-light-grey dark:border-gray-700 bg-light-mint/50 dark:bg-gray-700/50">
+          <div className="col-span-4 text-xs font-bold text-foreground">
+            نام محصول
+          </div>
+          <div className="col-span-2 text-xs font-bold text-foreground">
+            قیمت
+          </div>
+          <div className="col-span-1 text-xs font-bold text-foreground">
+            موجودی
+          </div>
+          <div className="col-span-1 text-xs font-bold text-foreground">
+            فروش
+          </div>
+          <div className="col-span-2 text-xs font-bold text-foreground">
+            امتیاز
+          </div>
+          <div className="col-span-2 text-xs font-bold text-foreground">
+            وضعیت
+          </div>
         </div>
 
         {/* Products */}
         {products.length > 0 ? (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-light-grey dark:divide-gray-700">
             {products.map((product) => (
               <div
                 key={product.id}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 hover:bg-light-mint/50 dark:hover:bg-gray-700/50 transition-all cursor-pointer group"
               >
                 {/* Product Name */}
                 <div className="col-span-1 md:col-span-4">
-                  <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                  <p className="text-xs text-gray-500 mt-1 line-clamp-1">{product.description}</p>
+                  <p className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">
+                    {product.name}
+                  </p>
+                  <p className="text-xs text-grey mt-1 line-clamp-1">
+                    {product.description}
+                  </p>
                   {product.featured && (
-                    <span className="inline-block mt-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5">
+                    <span className="inline-block mt-2 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 px-2 py-1 rounded-md font-medium">
                       ویژه
                     </span>
                   )}
@@ -207,9 +239,11 @@ export default function ProductsPage() {
 
                 {/* Price */}
                 <div className="col-span-1 md:col-span-2">
-                  <p className="text-sm text-gray-900">{formatCurrency(product.price)}</p>
+                  <p className="text-sm font-bold text-foreground">
+                    {formatCurrency(product.price)}
+                  </p>
                   {product.compareAtPrice && (
-                    <p className="text-xs text-gray-400 line-through mt-1">
+                    <p className="text-xs text-grey line-through mt-1">
                       {formatCurrency(product.compareAtPrice)}
                     </p>
                   )}
@@ -217,22 +251,28 @@ export default function ProductsPage() {
 
                 {/* Stock */}
                 <div className="col-span-1 md:col-span-1">
-                  <p className={`text-sm ${product.stock === 0 ? "text-red-600" : "text-gray-900"}`}>
+                  <p
+                    className={`text-sm font-bold ${product.stock === 0 ? "text-red-600 dark:text-red-400" : "text-foreground"}`}
+                  >
                     {formatNumber(product.stock)}
                   </p>
                 </div>
 
                 {/* Sold */}
                 <div className="col-span-1 md:col-span-1">
-                  <p className="text-sm text-gray-900">{formatNumber(product.soldCount || 0)}</p>
+                  <p className="text-sm font-bold text-foreground">
+                    {formatNumber(product.soldCount || 0)}
+                  </p>
                 </div>
 
                 {/* Rating */}
                 <div className="col-span-1 md:col-span-2">
                   {product.rating && (
                     <div>
-                      <p className="text-sm text-gray-900">⭐ {product.rating.toFixed(1)}</p>
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-sm font-bold text-foreground">
+                        ⭐ {product.rating.toFixed(1)}
+                      </p>
+                      <p className="text-xs text-grey mt-1">
                         {formatNumber(product.reviewCount || 0)} نظر
                       </p>
                     </div>
@@ -241,7 +281,9 @@ export default function ProductsPage() {
 
                 {/* Status */}
                 <div className="col-span-1 md:col-span-2">
-                  <span className={`inline-block text-xs px-3 py-1 ${getStatusColor(product.status)}`}>
+                  <span
+                    className={`inline-block text-xs px-3 py-1 rounded-full font-medium ${getStatusColor(product.status)}`}
+                  >
                     {getStatusLabel(product.status)}
                   </span>
                 </div>
@@ -250,8 +292,12 @@ export default function ProductsPage() {
           </div>
         ) : (
           <div className="p-12 text-center">
-            <p className="text-sm text-gray-400">هنوز محصولی ثبت نشده است</p>
-            <button className="mt-4 px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
+            <Package className="w-16 h-16 text-grey mx-auto mb-4" />
+            <p className="text-sm text-grey font-medium">
+              هنوز محصولی ثبت نشده است
+            </p>
+            <button className="mt-6 px-6 py-3 bg-primary hover:bg-primary/90 text-text-color text-sm font-medium rounded-xl transition-all shadow-lg flex items-center gap-2 mx-auto">
+              <Plus className="w-4 h-4" />
               افزودن اولین محصول
             </button>
           </div>

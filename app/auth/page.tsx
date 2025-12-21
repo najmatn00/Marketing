@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import api from "@/lib/apiProvider";
 import { SendOtpDto, VerifyOtpDto, AuthResponse } from "@/types/api.types";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { Phone, Lock } from "lucide-react";
 
 // Form schemas
 const phoneSchema = z.object({
@@ -78,14 +80,17 @@ export default function AuthPage() {
         otp: data.otp,
         deviceId,
       };
-      const { data: result } = await api.post<AuthResponse>("/auth/otp/verify", payload);
+      const { data: result } = await api.post<AuthResponse>(
+        "/auth/otp/verify",
+        payload
+      );
 
       // Store tokens in cookies
       if (result.accessToken) {
         Cookies.set("accessToken", result.accessToken, {
           expires: 7, // 7 days
           sameSite: "strict",
-          secure: process.env.NODE_ENV === "production"
+          secure: process.env.NODE_ENV === "production",
         });
       }
 
@@ -93,7 +98,7 @@ export default function AuthPage() {
         Cookies.set("refreshToken", result.refreshToken, {
           expires: 30, // 30 days
           sameSite: "strict",
-          secure: process.env.NODE_ENV === "production"
+          secure: process.env.NODE_ENV === "production",
         });
       }
 
@@ -103,7 +108,7 @@ export default function AuthPage() {
       // Redirect to dashboard after 1.5 seconds
       setTimeout(() => {
         if (result.user?.role === "seller") {
-          router.push("/seller/dashboard");
+          router.push("/dashboard");
         } else if (result.user?.role === "admin") {
           router.push("/admin");
         } else {
@@ -124,13 +129,28 @@ export default function AuthPage() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-xl p-8">
+    <div
+      dir="rtl"
+      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-secondary via-background to-light-mint p-4 relative"
+    >
+      {/* Theme Toggle */}
+      <div className="absolute top-4 left-4">
+        <ThemeToggle />
+      </div>
+
+      <div className="w-full max-w-md bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-light-grey dark:border-gray-700">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+            {!otpScreen ? (
+              <Phone className="w-8 h-8 text-text-color" />
+            ) : (
+              <Lock className="w-8 h-8 text-text-color" />
+            )}
+          </div>
+          <h2 className="text-2xl font-bold text-foreground mb-2">
             ورود / ثبت‌نام
           </h2>
-          <p className="text-gray-600">
+          <p className="text-grey">
             {!otpScreen
               ? "شماره موبایل خود را وارد کنید"
               : `کد تایید ارسال شده به ${phoneValue} را وارد کنید`}
@@ -145,7 +165,7 @@ export default function AuthPage() {
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 شماره موبایل
               </label>
@@ -154,11 +174,11 @@ export default function AuthPage() {
                 type="tel"
                 placeholder="مثال: ۰۹۰۲۱۲۳۴۵۶۷"
                 disabled={loading}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-light-grey dark:border-gray-600 text-foreground placeholder:text-grey rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 {...phoneForm.register("phone")}
               />
               {phoneForm.formState.errors.phone && (
-                <p className="text-sm text-red-600 mt-1">
+                <p className="text-sm text-red-600 dark:text-red-400 mt-1">
                   {phoneForm.formState.errors.phone.message}
                 </p>
               )}
@@ -166,7 +186,7 @@ export default function AuthPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-primary hover:bg-primary/90 text-text-color font-bold py-3 px-4 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed border "
               disabled={loading}
             >
               {loading ? "در حال ارسال..." : "دریافت کد تایید"}
@@ -180,7 +200,7 @@ export default function AuthPage() {
             <div>
               <label
                 htmlFor="otp"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className="block text-sm font-medium text-foreground mb-2"
               >
                 کد تایید
               </label>
@@ -189,12 +209,12 @@ export default function AuthPage() {
                 type="text"
                 placeholder="کد ۴ تا ۸ رقمی"
                 disabled={loading}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center tracking-widest"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-light-grey dark:border-gray-600 text-foreground placeholder:text-grey rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent text-center tracking-widest text-2xl font-bold transition-all"
                 maxLength={8}
                 {...otpForm.register("otp")}
               />
               {otpForm.formState.errors.otp && (
-                <p className="text-sm text-red-600 mt-1">
+                <p className="text-sm text-red-600 dark:text-red-400 mt-1">
                   {otpForm.formState.errors.otp.message}
                 </p>
               )}
@@ -204,14 +224,14 @@ export default function AuthPage() {
               <button
                 type="button"
                 onClick={handleBackToPhone}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors"
+                className="flex-1 bg-light-grey dark:bg-gray-700 hover:bg-grey dark:hover:bg-gray-600 text-foreground font-medium py-3 px-4 rounded-xl transition-all"
                 disabled={loading}
               >
                 بازگشت
               </button>
               <button
                 type="submit"
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-primary hover:bg-primary/90 text-text-color font-bold py-3 px-4 rounded-xl transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 {loading ? "در حال بررسی..." : "ورود"}
@@ -222,10 +242,10 @@ export default function AuthPage() {
 
         {message && (
           <div
-            className={`mt-6 p-3 rounded-lg text-center text-sm font-medium ${
+            className={`mt-6 p-4 rounded-xl text-center text-sm font-medium border ${
               token
-                ? "bg-green-50 text-green-800 border border-green-200"
-                : "bg-red-50 text-red-800 border border-red-200"
+                ? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-400 border-green-200 dark:border-green-800"
+                : "bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-400 border-red-200 dark:border-red-800"
             }`}
           >
             {message}
@@ -233,11 +253,11 @@ export default function AuthPage() {
         )}
 
         {token && (
-          <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
-            <p className="text-xs text-gray-600 font-medium mb-1">
-              Access Token:
+          <div className="mt-4 p-4 bg-light-mint dark:bg-gray-700/50 rounded-xl border border-light-grey dark:border-gray-600">
+            <p className="text-xs text-grey font-medium mb-2">Access Token:</p>
+            <p className="text-xs font-mono text-foreground break-all bg-white dark:bg-gray-800 p-2 rounded-lg">
+              {token}
             </p>
-            <p className="text-xs font-mono text-gray-800 break-all">{token}</p>
           </div>
         )}
       </div>

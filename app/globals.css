@@ -11,6 +11,8 @@
     --background: #FDFDFD;
     --foreground: #252B37;
     --secondary: #EFF8F8;
+        --text-color: #252B37;
+
 }
 
 /* Dark mode overrides */
@@ -24,6 +26,7 @@
     --background: #0b1220;
     --foreground: #f3f4f6;
     --secondary: #0f1f1f;
+    --text-color: #f3f4f6;
 }
 
 @theme inline {

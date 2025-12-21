@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { Pencil, Upload } from 'lucide-react';
-import AdminSidebar from '@/components/admin/AdminSidebar';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { Pencil, Upload } from "lucide-react";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 type FormData = {
   name: string;
@@ -24,17 +24,17 @@ export default function AdminBoothSettingsPage() {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      name: '',
-      city: '',
-      shopName: '',
-      instagram: '',
-      description: '',
+      name: "",
+      city: "",
+      shopName: "",
+      instagram: "",
+      description: "",
       profileImage: null,
     },
   });
 
   const onSubmit = (data: FormData) => {
-    console.log('SUBMIT DATA:', data);
+    console.log("SUBMIT DATA:", data);
     // این‌جا می‌تونی API ارسال کنی
   };
 
@@ -46,7 +46,7 @@ export default function AdminBoothSettingsPage() {
     setPreview(url);
 
     // مقدار عکس رو در فرم ذخیره کن
-    setValue('profileImage', file, { shouldValidate: true });
+    setValue("profileImage", file, { shouldValidate: true });
   };
 
   return (
@@ -86,9 +86,7 @@ export default function AdminBoothSettingsPage() {
 
             <div
               className="flex items-center gap-2 mt-3 text-dark-blue cursor-pointer"
-              onClick={() =>
-                document.getElementById('profile-upload')?.click()
-              }
+              onClick={() => document.getElementById("profile-upload")?.click()}
             >
               <Pencil className="w-4 h-4" />
               <span className="text-sm text-dark-blue">تغییر پروفایل</span>
@@ -109,7 +107,7 @@ export default function AdminBoothSettingsPage() {
               <div className="flex flex-col">
                 <label className="mb-2 text-dark-blue">تغییر نام:</label>
                 <input
-                  {...register('name', { required: 'نام لازم است' })}
+                  {...register("name", { required: "نام لازم است" })}
                   className="border border-grey rounded px-4 py-2"
                   placeholder="نام"
                 />
@@ -124,7 +122,7 @@ export default function AdminBoothSettingsPage() {
               <div className="flex flex-col">
                 <label className="mb-2 text-transparent">.</label>
                 <input
-                  {...register('city', { required: 'شهر لازم است' })}
+                  {...register("city", { required: "شهر لازم است" })}
                   className="border border-grey rounded px-4 py-2"
                   placeholder="شهر"
                 />
@@ -139,7 +137,7 @@ export default function AdminBoothSettingsPage() {
               <div className="flex flex-col col-span-2">
                 <label className="mb-2 text-dark-blue  ">نام فروشگاه</label>
                 <input
-                  {...register('shopName', { required: true })}
+                  {...register("shopName", { required: true })}
                   className="border border-grey rounded px-4 py-2"
                   placeholder="نام فروشگاه"
                 />
@@ -147,9 +145,11 @@ export default function AdminBoothSettingsPage() {
 
               {/* instagram */}
               <div className="flex flex-col col-span-2">
-                <label className="mb-2 text-dark-blue  ">آی دی اینستاگرام:</label>
+                <label className="mb-2 text-dark-blue  ">
+                  آی دی اینستاگرام:
+                </label>
                 <input
-                  {...register('instagram')}
+                  {...register("instagram")}
                   className="border border-grey rounded px-4 py-2"
                   placeholder="@example"
                 />
@@ -159,7 +159,7 @@ export default function AdminBoothSettingsPage() {
               <div className="flex flex-col col-span-2">
                 <label className="mb-2 text-dark-blue  ">توضیحات غرفه:</label>
                 <textarea
-                  {...register('description')}
+                  {...register("description")}
                   className="border border-grey rounded px-4 py-2"
                   rows={3}
                   placeholder="متن توضیحات..."
@@ -171,7 +171,7 @@ export default function AdminBoothSettingsPage() {
             <div className="flex items-center justify-center gap-6 mt-8">
               <button
                 type="submit"
-                className="px-12 py-3 bg-primary text-white rounded-lg text-lg font-semibold"
+                className="px-12 py-3 bg-primary text-text-color rounded-lg text-lg font-semibold"
               >
                 تایید
               </button>

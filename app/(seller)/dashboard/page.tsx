@@ -4,7 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import api from "@/lib/apiProvider";
 import { SellerStats, PaginatedOrders } from "@/types/api.types";
-import { TrendingUp, Package, ShoppingCart, Users, DollarSign, Eye, Clock, Plus, ArrowLeft, BarChart3 } from "lucide-react";
+import {
+  TrendingUp,
+  Package,
+  ShoppingCart,
+  Users,
+  DollarSign,
+  Eye,
+  Clock,
+  Plus,
+  ArrowLeft,
+  BarChart3,
+} from "lucide-react";
 
 export default function SellerDashboard() {
   const [stats, setStats] = useState<SellerStats | null>(null);
@@ -62,20 +73,33 @@ export default function SellerDashboard() {
     const statusMap: Record<string, { label: string; color: string }> = {
       pending: { label: "در انتظار", color: "bg-yellow-100 text-yellow-800" },
       confirmed: { label: "تایید شده", color: "bg-blue-100 text-blue-800" },
-      processing: { label: "در حال پردازش", color: "bg-purple-100 text-purple-800" },
+      processing: {
+        label: "در حال پردازش",
+        color: "bg-purple-100 text-purple-800",
+      },
       shipped: { label: "ارسال شده", color: "bg-indigo-100 text-indigo-800" },
-      delivered: { label: "تحویل داده شده", color: "bg-green-100 text-green-800" },
+      delivered: {
+        label: "تحویل داده شده",
+        color: "bg-green-100 text-green-800",
+      },
       cancelled: { label: "لغو شده", color: "bg-red-100 text-red-800" },
-      refunded: { label: "بازگشت داده شده", color: "bg-gray-100 text-gray-800" },
+      refunded: {
+        label: "بازگشت داده شده",
+        color: "bg-gray-100 text-gray-800",
+      },
     };
-    return statusMap[status] || { label: status, color: "bg-gray-100 text-gray-800" };
+    return (
+      statusMap[status] || { label: status, color: "bg-gray-100 text-gray-800" }
+    );
   };
 
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-20">
         <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mb-6"></div>
-        <p className="text-lg font-medium text-foreground">در حال بارگذاری داشبورد...</p>
+        <p className="text-lg font-medium text-foreground">
+          در حال بارگذاری داشبورد...
+        </p>
         <p className="text-sm text-grey mt-2">لطفا کمی صبر کنید</p>
       </div>
     );
@@ -87,11 +111,13 @@ export default function SellerDashboard() {
         <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-6">
           <BarChart3 className="w-8 h-8 text-red-600" />
         </div>
-        <h2 className="text-xl font-bold text-foreground mb-2">خطا در بارگذاری</h2>
+        <h2 className="text-xl font-bold text-foreground mb-2">
+          خطا در بارگذاری
+        </h2>
         <p className="text-grey mb-6 max-w-md">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="px-6 py-3 bg-primary text-white font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-lg"
+          className="px-6 py-3 bg-primary text-text-color font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-lg"
         >
           تلاش مجدد
         </button>
@@ -105,42 +131,42 @@ export default function SellerDashboard() {
       value: formatCurrency(stats?.totalSales || 0),
       icon: DollarSign,
       color: "from-green-500 to-green-600",
-      bgColor: "bg-green-50"
+      bgColor: "bg-green-50",
     },
     {
       label: "سفارشات",
       value: formatNumber(stats?.totalOrders || 0),
       icon: ShoppingCart,
       color: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50"
+      bgColor: "bg-blue-50",
     },
     {
       label: "محصولات",
       value: formatNumber(stats?.totalProducts || 0),
       icon: Package,
       color: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50"
+      bgColor: "bg-purple-50",
     },
     {
       label: "مشتریان",
       value: formatNumber(stats?.totalCustomers || 0),
       icon: Users,
       color: "from-orange-500 to-orange-600",
-      bgColor: "bg-orange-50"
+      bgColor: "bg-orange-50",
     },
     {
       label: "درآمد امروز",
       value: formatCurrency(stats?.todayRevenue || 0),
       icon: TrendingUp,
       color: "from-primary to-primary",
-      bgColor: "bg-primary/10"
+      bgColor: "bg-primary/10",
     },
     {
       label: "بازدیدها",
       value: formatNumber(stats?.totalViews || 0),
       icon: Eye,
       color: "from-cyan-500 to-cyan-600",
-      bgColor: "bg-cyan-50"
+      bgColor: "bg-cyan-50",
     },
   ];
 
@@ -148,8 +174,12 @@ export default function SellerDashboard() {
     <div className="space-y-8">
       {/* Welcome Section */}
       <div className="text-center py-6">
-        <h1 className="text-3xl font-bold text-foreground mb-2">خوش آمدید به داشبورد فروشنده</h1>
-        <p className="text-grey text-lg">آمار و اطلاعات کسب و کار شما در یک نگاه</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">
+          خوش آمدید به داشبورد فروشنده
+        </h1>
+        <p className="text-grey text-lg">
+          آمار و اطلاعات کسب و کار شما در یک نگاه
+        </p>
       </div>
 
       {/* Stats Grid */}
@@ -157,18 +187,28 @@ export default function SellerDashboard() {
         {dashboardStats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={index} className={`${stat.bgColor} rounded-2xl p-6 border border-light-grey hover:shadow-lg transition-all duration-300`}>
+            <div
+              key={index}
+              className={`${stat.bgColor} rounded-2xl p-6 border border-light-grey hover:shadow-lg transition-all duration-300`}
+            >
               <div className="flex items-center justify-between mb-4">
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}>
-                  <Icon className="w-6 h-6 text-white" />
+                <div
+                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}
+                >
+                  <Icon className="w-6 h-6 text-text-color" />
                 </div>
                 <div className="text-right">
                   <p className="text-sm font-medium text-grey">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
+                  <p className="text-2xl font-bold text-foreground mt-1">
+                    {stat.value}
+                  </p>
                 </div>
               </div>
               <div className="w-full bg-white/50 rounded-full h-2">
-                <div className={`h-2 bg-gradient-to-r ${stat.color} rounded-full`} style={{ width: '75%' }}></div>
+                <div
+                  className={`h-2 bg-gradient-to-r ${stat.color} rounded-full`}
+                  style={{ width: "75%" }}
+                ></div>
               </div>
             </div>
           );
@@ -198,13 +238,18 @@ export default function SellerDashboard() {
                 {orders.data.map((order) => {
                   const statusInfo = getStatusLabel(order.status);
                   return (
-                    <div key={order.id} className="flex items-center justify-between p-4 bg-light-mint/50 rounded-xl hover:bg-light-mint transition-colors">
+                    <div
+                      key={order.id}
+                      className="flex items-center justify-between p-4 bg-light-mint/50 rounded-xl hover:bg-light-mint transition-colors"
+                    >
                       <div className="flex items-center gap-4">
                         <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                           <ShoppingCart className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <p className="font-medium text-foreground">#{order.orderNumber}</p>
+                          <p className="font-medium text-foreground">
+                            #{order.orderNumber}
+                          </p>
                           <p className="text-sm text-grey flex items-center gap-1">
                             <Clock className="w-3 h-3" />
                             {formatDate(order.createdAt)}
@@ -212,8 +257,12 @@ export default function SellerDashboard() {
                         </div>
                       </div>
                       <div className="text-left">
-                        <p className="font-bold text-foreground text-lg">{formatCurrency(order.totalAmount)}</p>
-                        <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color} mt-1`}>
+                        <p className="font-bold text-foreground text-lg">
+                          {formatCurrency(order.totalAmount)}
+                        </p>
+                        <span
+                          className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color} mt-1`}
+                        >
                           {statusInfo.label}
                         </span>
                       </div>
@@ -224,8 +273,12 @@ export default function SellerDashboard() {
             ) : (
               <div className="text-center py-12">
                 <Package className="w-16 h-16 text-grey mx-auto mb-4" />
-                <p className="text-grey font-medium">هنوز سفارشی ثبت نشده است</p>
-                <p className="text-sm text-grey/70 mt-1">سفارشات جدید در اینجا نمایش داده می‌شوند</p>
+                <p className="text-grey font-medium">
+                  هنوز سفارشی ثبت نشده است
+                </p>
+                <p className="text-sm text-grey/70 mt-1">
+                  سفارشات جدید در اینجا نمایش داده می‌شوند
+                </p>
               </div>
             )}
           </div>
@@ -237,12 +290,16 @@ export default function SellerDashboard() {
                 <BarChart3 className="w-6 h-6 text-primary" />
                 نمودار فروش
               </h2>
-              <span className="text-sm text-grey bg-light-mint px-3 py-1 rounded-full">۳۰ روز گذشته</span>
+              <span className="text-sm text-grey bg-light-mint px-3 py-1 rounded-full">
+                ۳۰ روز گذشته
+              </span>
             </div>
             <div className="h-64 flex flex-col items-center justify-center bg-gradient-to-br from-light-mint to-white rounded-xl border-2 border-dashed border-light-grey">
               <BarChart3 className="w-12 h-12 text-grey mb-4" />
               <p className="text-grey font-medium">نمودار فروش ماهانه</p>
-              <p className="text-sm text-grey/70 mt-1">به زودی در دسترس خواهد بود</p>
+              <p className="text-sm text-grey/70 mt-1">
+                به زودی در دسترس خواهد بود
+              </p>
             </div>
           </div>
         </div>
@@ -250,7 +307,7 @@ export default function SellerDashboard() {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Quick Actions */}
-          <div className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-6 text-white shadow-lg">
+          <div className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl p-6 text-text-color shadow-lg">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <Plus className="w-5 h-5" />
               اقدامات سریع
@@ -298,8 +355,12 @@ export default function SellerDashboard() {
                   <TrendingUp className="w-4 h-4 text-green-600" />
                 </div>
                 <div>
-                  <p className="font-medium text-foreground text-sm">فروش شما در حال رشد است</p>
-                  <p className="text-xs text-grey">۲۰% افزایش نسبت به هفته گذشته</p>
+                  <p className="font-medium text-foreground text-sm">
+                    فروش شما در حال رشد است
+                  </p>
+                  <p className="text-xs text-grey">
+                    ۲۰% افزایش نسبت به هفته گذشته
+                  </p>
                 </div>
               </div>
             </div>
@@ -312,17 +373,28 @@ export default function SellerDashboard() {
               فعالیت اخیر
             </h3>
             <div className="space-y-3">
-              {orders && orders.data.slice(0, 4).map((order, index) => (
-                <div key={order.id} className="flex items-start gap-3">
-                  <div className={`w-2 h-2 rounded-full mt-2 ${
-                    index === 0 ? 'bg-primary' : index === 1 ? 'bg-blue-500' : 'bg-grey'
-                  }`}></div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-foreground">سفارش {order.orderNumber}</p>
-                    <p className="text-xs text-grey">{formatDate(order.createdAt)}</p>
+              {orders &&
+                orders.data.slice(0, 4).map((order, index) => (
+                  <div key={order.id} className="flex items-start gap-3">
+                    <div
+                      className={`w-2 h-2 rounded-full mt-2 ${
+                        index === 0
+                          ? "bg-primary"
+                          : index === 1
+                            ? "bg-blue-500"
+                            : "bg-grey"
+                      }`}
+                    ></div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-foreground">
+                        سفارش {order.orderNumber}
+                      </p>
+                      <p className="text-xs text-grey">
+                        {formatDate(order.createdAt)}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

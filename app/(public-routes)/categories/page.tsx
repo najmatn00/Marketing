@@ -1,49 +1,127 @@
-'use client';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import Categories from '@/components/Categories';
-import FilterSidebar, { FilterState } from '@/components/FilterSidebar';
-import { useRouter } from 'next/navigation';
-import { useState, useMemo } from 'react';
+"use client";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import Categories from "@/components/Categories";
+import FilterSidebar, { FilterState } from "@/components/FilterSidebar";
+import { useRouter } from "next/navigation";
+import { useState, useMemo } from "react";
 
 export default function CategoriesPage() {
   const router = useRouter();
 
   const [filters, setFilters] = useState<FilterState>({
-    searchQuery: '',
+    searchQuery: "",
     selectedCategories: [],
-    priceRange: { min: '', max: '' },
+    priceRange: { min: "", max: "" },
     selectedBrands: [],
     selectedFeatures: [],
-    selectedPaymentOptions: []
+    selectedPaymentOptions: [],
   });
 
   // Fake categories data - replace with API call later
   const allCategories = [
-    { id: 1, name: 'الکترونیک', count: 245, image: '/images/B2B.webp', type: 'الکترونیک' },
-    { id: 2, name: 'مد و پوشاک', count: 432, image: '/images/B2B.webp', type: 'مد و پوشاک' },
-    { id: 3, name: 'خانه و آشپزخانه', count: 189, image: '/images/B2B.webp', type: 'خانه و آشپزخانه' },
-    { id: 4, name: 'کتاب و نشریات', count: 567, image: '/images/B2B.webp', type: 'کتاب و نشریات' },
-    { id: 5, name: 'ورزش و سرگرمی', count: 321, image: '/images/B2B.webp', type: 'ورزش و سرگرمی' },
-    { id: 6, name: 'لوازم آرایشی', count: 298, image: '/images/B2B.webp', type: 'لوازم آرایشی' },
-    { id: 7, name: 'اسباب بازی', count: 176, image: '/images/B2B.webp', type: 'اسباب بازی' },
-    { id: 8, name: 'لوازم التحریر', count: 134, image: '/images/B2B.webp', type: 'لوازم التحریر' },
-    { id: 9, name: 'مواد غذایی', count: 412, image: '/images/B2B.webp', type: 'مواد غذایی' },
-    { id: 10, name: 'خودرو و موتورسیکلت', count: 89, image: '/images/B2B.webp', type: 'خودرو و موتورسیکلت' },
-    { id: 11, name: 'ابزار و اداری', count: 234, image: '/images/B2B.webp', type: 'ابزار و اداری' },
-    { id: 12, name: 'موبایل و تبلت', count: 378, image: '/images/B2B.webp', type: 'موبایل و تبلت' },
+    {
+      id: 1,
+      name: "الکترونیک",
+      count: 245,
+      image: "/images/B2B.webp",
+      type: "الکترونیک",
+    },
+    {
+      id: 2,
+      name: "مد و پوشاک",
+      count: 432,
+      image: "/images/B2B.webp",
+      type: "مد و پوشاک",
+    },
+    {
+      id: 3,
+      name: "خانه و آشپزخانه",
+      count: 189,
+      image: "/images/B2B.webp",
+      type: "خانه و آشپزخانه",
+    },
+    {
+      id: 4,
+      name: "کتاب و نشریات",
+      count: 567,
+      image: "/images/B2B.webp",
+      type: "کتاب و نشریات",
+    },
+    {
+      id: 5,
+      name: "ورزش و سرگرمی",
+      count: 321,
+      image: "/images/B2B.webp",
+      type: "ورزش و سرگرمی",
+    },
+    {
+      id: 6,
+      name: "لوازم آرایشی",
+      count: 298,
+      image: "/images/B2B.webp",
+      type: "لوازم آرایشی",
+    },
+    {
+      id: 7,
+      name: "اسباب بازی",
+      count: 176,
+      image: "/images/B2B.webp",
+      type: "اسباب بازی",
+    },
+    {
+      id: 8,
+      name: "لوازم التحریر",
+      count: 134,
+      image: "/images/B2B.webp",
+      type: "لوازم التحریر",
+    },
+    {
+      id: 9,
+      name: "مواد غذایی",
+      count: 412,
+      image: "/images/B2B.webp",
+      type: "مواد غذایی",
+    },
+    {
+      id: 10,
+      name: "خودرو و موتورسیکلت",
+      count: 89,
+      image: "/images/B2B.webp",
+      type: "خودرو و موتورسیکلت",
+    },
+    {
+      id: 11,
+      name: "ابزار و اداری",
+      count: 234,
+      image: "/images/B2B.webp",
+      type: "ابزار و اداری",
+    },
+    {
+      id: 12,
+      name: "موبایل و تبلت",
+      count: 378,
+      image: "/images/B2B.webp",
+      type: "موبایل و تبلت",
+    },
   ];
 
   // Filter categories based on selected filters
   const filteredCategories = useMemo(() => {
-    return allCategories.filter(category => {
+    return allCategories.filter((category) => {
       // Search filter
-      if (filters.searchQuery && !category.name.toLowerCase().includes(filters.searchQuery.toLowerCase())) {
+      if (
+        filters.searchQuery &&
+        !category.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
+      ) {
         return false;
       }
 
       // Category filter (filter by category type)
-      if (filters.selectedCategories.length > 0 && !filters.selectedCategories.includes(category.type)) {
+      if (
+        filters.selectedCategories.length > 0 &&
+        !filters.selectedCategories.includes(category.type)
+      ) {
         return false;
       }
 
@@ -57,7 +135,6 @@ export default function CategoriesPage() {
 
   return (
     <div className="min-h-screen bg-white">
-
       <main>
         {/* Hero Section */}
         <section className="bg-light-mint py-8 md:py-12">
@@ -108,7 +185,7 @@ export default function CategoriesPage() {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
                           {/* Product Count Badge */}
-                          <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-primary text-white px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold shadow-lg">
+                          <div className="absolute top-2 right-2 md:top-4 md:right-4 bg-primary text-text-color px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold shadow-lg">
                             {category.count} محصول
                           </div>
                         </div>
@@ -123,17 +200,21 @@ export default function CategoriesPage() {
                     ))
                   ) : (
                     <div className="col-span-full text-center py-20">
-                      <p className="text-grey text-xl">هیچ دسته بندی با فیلترهای انتخابی یافت نشد</p>
+                      <p className="text-grey text-xl">
+                        هیچ دسته بندی با فیلترهای انتخابی یافت نشد
+                      </p>
                       <button
-                        onClick={() => setFilters({
-                          searchQuery: '',
-                          selectedCategories: [],
-                          priceRange: { min: '', max: '' },
-                          selectedBrands: [],
-                          selectedFeatures: [],
-                          selectedPaymentOptions: []
-                        })}
-                        className="mt-6 px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-dark-blue transition-all"
+                        onClick={() =>
+                          setFilters({
+                            searchQuery: "",
+                            selectedCategories: [],
+                            priceRange: { min: "", max: "" },
+                            selectedBrands: [],
+                            selectedFeatures: [],
+                            selectedPaymentOptions: [],
+                          })
+                        }
+                        className="mt-6 px-8 py-3 bg-primary text-text-color rounded-xl font-bold hover:bg-dark-blue transition-all"
                       >
                         پاک کردن فیلترها
                       </button>
@@ -148,8 +229,6 @@ export default function CategoriesPage() {
         {/* Bottom Categories Component */}
         <Categories />
       </main>
-
-
     </div>
   );
 }

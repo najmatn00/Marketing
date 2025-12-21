@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="fa" suppressHydrationWarning>
       <body
-        className={`${iranYekan.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${iranYekan.variable} ${geistSans.variable} ${geistMono.variable} antialiased text-text-color`}
       >
         <ThemeProvider>
           <ConditionalLayout>{children}</ConditionalLayout>

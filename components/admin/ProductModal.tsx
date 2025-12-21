@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -15,13 +15,17 @@ interface ProductModalProps {
   };
 }
 
-export default function ProductModal({ isOpen, onClose, product }: ProductModalProps) {
+export default function ProductModal({
+  isOpen,
+  onClose,
+  product,
+}: ProductModalProps) {
   const [formData, setFormData] = useState({
-    name: product?.name || '',
-    category: product?.category || '',
+    name: product?.name || "",
+    category: product?.category || "",
     price: product?.price || 0,
     stock: product?.stock || 0,
-    status: product?.status || '',
+    status: product?.status || "",
   });
 
   if (!isOpen) return null;
@@ -29,16 +33,23 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log('Form data:', formData);
+    console.log("Form data:", formData);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" onClick={onClose}>
-      <div className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full mx-4" onClick={(e) => e.stopPropagation()} dir="rtl">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full mx-4"
+        onClick={(e) => e.stopPropagation()}
+        dir="rtl"
+      >
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800">
-            {product?.id ? 'ویرایش محصول' : 'محصول جدید'}
+            {product?.id ? "ویرایش محصول" : "محصول جدید"}
           </h2>
           <button
             onClick={onClose}
@@ -58,7 +69,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -71,7 +84,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               </label>
               <select
                 value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, category: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               >
@@ -91,7 +106,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
                 <input
                   type="number"
                   value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, price: Number(e.target.value) })
+                  }
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -103,7 +120,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
                 <input
                   type="number"
                   value={formData.stock}
-                  onChange={(e) => setFormData({ ...formData, stock: Number(e.target.value) })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, stock: Number(e.target.value) })
+                  }
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
                 />
@@ -118,7 +137,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
               <input
                 type="text"
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, status: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               />
@@ -136,9 +157,9 @@ export default function ProductModal({ isOpen, onClose, product }: ProductModalP
             </button>
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              className="px-6 py-2 bg-blue-500 text-text-color rounded-lg hover:bg-blue-600"
             >
-              {product?.id ? 'ذخیره تغییرات' : 'افزودن محصول'}
+              {product?.id ? "ذخیره تغییرات" : "افزودن محصول"}
             </button>
           </div>
         </form>
