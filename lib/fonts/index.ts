@@ -20,5 +20,5 @@ export const iranYekan = localFont({
     ],
     variable: '--font-iran-yekan',
     display: 'swap',
-    fallback: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+    fallback: ['Arial', 'sans-serif'],
 })

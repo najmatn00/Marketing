@@ -1,192 +1,150 @@
 "use client";
 
-import { useState } from "react";
-
 export default function SellerDashboard() {
-  // Sample data for dashboard items
-  const dashboardItems = [
-    { id: 1, title: "کل فروش", value: "۲۵،۰۰۰،۰۰۰ تومان", icon: "💰" },
-    { id: 2, title: "سفارشات جدید", value: "۱۲", icon: "📦" },
-    { id: 3, title: "محصولات", value: "۴۵", icon: "🛍️" },
-    { id: 4, title: "مشتریان", value: "۱۸۹", icon: "👥" },
-    { id: 5, title: "درآمد امروز", value: "۱،۵۰۰،۰۰۰ تومان", icon: "📊" },
-    { id: 6, title: "بازدیدها", value: "۳،۲۱۴", icon: "👁️" },
+  const stats = [
+    { label: "کل فروش", value: "۲۵،۰۰۰،۰۰۰" },
+    { label: "سفارشات", value: "۱۲" },
+    { label: "محصولات", value: "۴۵" },
+    { label: "مشتریان", value: "۱۸۹" },
+    { label: "درآمد امروز", value: "۱،۵۰۰،۰۰۰" },
+    { label: "بازدیدها", value: "۳،۲۱۴" },
+  ];
+
+  const orders = [
+    { id: "1234", time: "۲ ساعت پیش", amount: "۱،۲۰۰،۰۰۰", status: "تایید شده" },
+    { id: "1235", time: "۳ ساعت پیش", amount: "۸۵۰،۰۰۰", status: "در انتظار" },
+    { id: "1236", time: "۵ ساعت پیش", amount: "۲،۱۰۰،۰۰۰", status: "تایید شده" },
+    { id: "1237", time: "۱ روز پیش", amount: "۱،۵۵۰،۰۰۰", status: "تایید شده" },
   ];
 
   return (
-    <div dir="rtl" className="min-h-screen bg-gray-50">
-      <div className="container mx-auto p-4 lg:p-8">
+    <div dir="rtl" className="min-h-screen bg-white">
+      <div className="max-w-[1400px] mx-auto px-6 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">داشبورد فروشنده</h1>
-          <p className="text-gray-600 mt-2">مدیریت فروشگاه و محصولات</p>
+        <div className="mb-12">
+          <h1 className="text-2xl font-light text-gray-900">داشبورد</h1>
         </div>
 
-        {/* Main Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* First Part: Dashboard Items (Hidden on mobile) */}
-          <div className="hidden lg:block lg:col-span-3">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                منوی سریع
-              </h2>
-              <nav className="space-y-2">
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  📊 آمار کلی
-                </button>
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  📦 سفارشات
-                </button>
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  🛍️ محصولات
-                </button>
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  👥 مشتریان
-                </button>
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  💰 مالی
-                </button>
-                <button className="w-full text-right px-4 py-3 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition-colors text-gray-700 font-medium">
-                  ⚙️ تنظیمات
-                </button>
-              </nav>
-            </div>
-          </div>
+        {/* Layout Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Sidebar Menu */}
+          <aside className="hidden lg:block lg:col-span-2">
+            <nav className="space-y-1">
+              <a href="#" className="block px-3 py-2 text-sm text-gray-900 hover:text-gray-600 transition-colors">
+                آمار
+              </a>
+              <a href="#" className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                سفارشات
+              </a>
+              <a href="#" className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                محصولات
+              </a>
+              <a href="#" className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                مشتریان
+              </a>
+              <a href="#" className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                مالی
+              </a>
+              <a href="#" className="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                تنظیمات
+              </a>
+            </nav>
+          </aside>
 
-          {/* Second Part: Main Content (Always visible) */}
-          <div className="col-span-1 lg:col-span-6">
-            <div className="space-y-6">
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {dashboardItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-3xl">{item.icon}</span>
+          {/* Main Content */}
+          <main className="col-span-1 lg:col-span-7">
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+              {stats.map((stat, index) => (
+                <div key={index} className="border border-gray-200 p-6">
+                  <p className="text-xs text-gray-500 mb-2">{stat.label}</p>
+                  <p className="text-xl font-light text-gray-900">{stat.value}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Orders */}
+            <div className="border border-gray-200 p-6">
+              <h2 className="text-sm font-medium text-gray-900 mb-6">سفارشات اخیر</h2>
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <div key={order.id} className="flex items-center justify-between pb-4 border-b border-gray-100 last:border-0">
+                    <div>
+                      <p className="text-sm text-gray-900">#{order.id}</p>
+                      <p className="text-xs text-gray-500 mt-1">{order.time}</p>
                     </div>
-                    <h3 className="text-gray-600 text-sm mb-1">{item.title}</h3>
-                    <p className="text-xl font-bold text-gray-900">
-                      {item.value}
-                    </p>
+                    <div className="text-left">
+                      <p className="text-sm text-gray-900">{order.amount}</p>
+                      <p className="text-xs text-gray-500 mt-1">{order.status}</p>
+                    </div>
                   </div>
                 ))}
               </div>
+            </div>
 
-              {/* Recent Orders */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                  سفارشات اخیر
-                </h2>
-                <div className="space-y-3">
-                  {[1, 2, 3, 4].map((order) => (
-                    <div
-                      key={order}
-                      className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-                    >
-                      <div>
-                        <p className="font-semibold text-gray-900">
-                          سفارش #{order}234
-                        </p>
-                        <p className="text-sm text-gray-600">۲ ساعت پیش</p>
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-gray-900">
-                          ۱،۲۰۰،۰۰۰ تومان
-                        </p>
-                        <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
-                          تایید شده
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Sales Chart Placeholder */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-xl font-semibold mb-4 text-gray-800">
-                  نمودار فروش
-                </h2>
-                <div className="h-64 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
-                  <p className="text-gray-500">نمودار فروش هفتگی</p>
-                </div>
+            {/* Chart */}
+            <div className="border border-gray-200 p-6 mt-6">
+              <h2 className="text-sm font-medium text-gray-900 mb-6">نمودار فروش</h2>
+              <div className="h-64 flex items-center justify-center bg-gray-50">
+                <p className="text-xs text-gray-400">نمودار</p>
               </div>
             </div>
-          </div>
+          </main>
 
-          {/* Third Part: 3 Empty Boxes (Hidden on mobile) */}
-          <div className="hidden lg:block lg:col-span-3">
-            <div className="space-y-6">
-              {/* Box 1: Notifications */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  اعلانات
-                </h3>
-                <div className="space-y-3">
-                  <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                    <p className="text-sm text-gray-700">
-                      ۳ سفارش در انتظار تایید
-                    </p>
-                  </div>
-                  <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <p className="text-sm text-gray-700">
-                      محصول جدید اضافه شد
-                    </p>
+          {/* Right Sidebar */}
+          <aside className="hidden lg:block lg:col-span-3 space-y-6">
+            {/* Notifications */}
+            <div className="border border-gray-200 p-6">
+              <h3 className="text-sm font-medium text-gray-900 mb-4">اعلانات</h3>
+              <div className="space-y-3">
+                <p className="text-xs text-gray-600 pb-3 border-b border-gray-100">
+                  ۳ سفارش در انتظار تایید
+                </p>
+                <p className="text-xs text-gray-600">محصول جدید اضافه شد</p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="border border-gray-200 p-6">
+              <h3 className="text-sm font-medium text-gray-900 mb-4">اقدامات</h3>
+              <div className="space-y-2">
+                <button className="w-full px-4 py-2 bg-gray-900 text-white text-xs hover:bg-gray-700 transition-colors">
+                  افزودن محصول
+                </button>
+                <button className="w-full px-4 py-2 border border-gray-900 text-gray-900 text-xs hover:bg-gray-50 transition-colors">
+                  مشاهده سفارشات
+                </button>
+              </div>
+            </div>
+
+            {/* Activity */}
+            <div className="border border-gray-200 p-6">
+              <h3 className="text-sm font-medium text-gray-900 mb-4">فعالیت</h3>
+              <div className="space-y-3">
+                <div className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-900 rounded-full mt-1.5"></div>
+                  <div>
+                    <p className="text-xs text-gray-900">سفارش جدید</p>
+                    <p className="text-xs text-gray-400 mt-0.5">۱۰ دقیقه پیش</p>
                   </div>
                 </div>
-              </div>
-
-              {/* Box 2: Quick Actions */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  اقدامات سریع
-                </h3>
-                <div className="space-y-2">
-                  <button className="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors font-medium">
-                    + افزودن محصول
-                  </button>
-                  <button className="w-full px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors font-medium">
-                    مشاهده سفارشات
-                  </button>
-                  <button className="w-full px-4 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors font-medium">
-                    گزارش فروش
-                  </button>
+                <div className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-1.5"></div>
+                  <div>
+                    <p className="text-xs text-gray-900">محصول ویرایش شد</p>
+                    <p className="text-xs text-gray-400 mt-0.5">۳۰ دقیقه پیش</p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Box 3: Activity */}
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-lg font-semibold mb-4 text-gray-800">
-                  فعالیت اخیر
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
-                    <div>
-                      <p className="text-sm text-gray-700">سفارش جدید</p>
-                      <p className="text-xs text-gray-500">۱۰ دقیقه پیش</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
-                    <div>
-                      <p className="text-sm text-gray-700">محصول ویرایش شد</p>
-                      <p className="text-xs text-gray-500">۳۰ دقیقه پیش</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full mt-2"></div>
-                    <div>
-                      <p className="text-sm text-gray-700">بازخورد جدید</p>
-                      <p className="text-xs text-gray-500">۱ ساعت پیش</p>
-                    </div>
+                <div className="flex items-start gap-2">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full mt-1.5"></div>
+                  <div>
+                    <p className="text-xs text-gray-900">بازخورد جدید</p>
+                    <p className="text-xs text-gray-400 mt-0.5">۱ ساعت پیش</p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </aside>
         </div>
       </div>
     </div>
