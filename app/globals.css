@@ -13,6 +13,19 @@
     --secondary: #EFF8F8;
 }
 
+/* Dark mode overrides */
+.dark {
+    --primary: #14A6A1;
+    --light-mint: #0f1f1f;
+    --dark-blue: #f3f4f6;
+    --grey: #9ca3af;
+    --light-grey: #1f2937;
+    --white: #0b1220;
+    --background: #0b1220;
+    --foreground: #f3f4f6;
+    --secondary: #0f1f1f;
+}
+
 @theme inline {
     --color-primary: var(--primary);
     --color-light-mint: var(--light-mint);
