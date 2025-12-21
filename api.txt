@@ -1,0 +1,5585 @@
+
+window.onload = function() {
+  // Build a system
+  let url = window.location.search.match(/url=([^&]+)/);
+  if (url && url.length > 1) {
+    url = decodeURIComponent(url[1]);
+  } else {
+    url = window.location.origin;
+  }
+  let options = {
+  "swaggerDoc": {
+    "openapi": "3.0.0",
+    "paths": {
+      "/api/v1": {
+        "get": {
+          "operationId": "AppController_getHello",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "tags": [
+            "App"
+          ]
+        }
+      },
+      "/api/v1/settings/system": {
+        "get": {
+          "operationId": "SettingsController_getSystemSettings",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Get system settings",
+          "tags": [
+            "Settings"
+          ]
+        },
+        "patch": {
+          "operationId": "SettingsController_updateSystemSettings",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update system settings (Admin only)",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/settings/point-rules": {
+        "get": {
+          "operationId": "SettingsController_getPointRules",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Get all point rules",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/settings/point-rules/{name}": {
+        "get": {
+          "operationId": "SettingsController_getPointRule",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Get specific point rule",
+          "tags": [
+            "Settings"
+          ]
+        },
+        "patch": {
+          "operationId": "SettingsController_updatePointRule",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatePointRuleDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update point rule (Admin only)",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/settings/point-rules/{name}/toggle": {
+        "patch": {
+          "operationId": "SettingsController_togglePointRule",
+          "parameters": [
+            {
+              "name": "name",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Enable/disable point rule (Admin only)",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/settings/levels": {
+        "get": {
+          "operationId": "SettingsController_getLevelSettings",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Get all level settings",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/settings/levels/{level}": {
+        "get": {
+          "operationId": "SettingsController_getLevelSettingsByLevel",
+          "parameters": [
+            {
+              "name": "level",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Get specific level settings",
+          "tags": [
+            "Settings"
+          ]
+        },
+        "patch": {
+          "operationId": "SettingsController_updateLevelSettings",
+          "parameters": [
+            {
+              "name": "level",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateLevelSettingsDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update level settings (Admin only)",
+          "tags": [
+            "Settings"
+          ]
+        }
+      },
+      "/api/v1/auth/otp/send": {
+        "post": {
+          "operationId": "AuthController_sendOtp",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendOtpDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Send OTP to phone number",
+          "tags": [
+            "Authentication"
+          ]
+        }
+      },
+      "/api/v1/auth/otp/verify": {
+        "post": {
+          "operationId": "AuthController_verifyOtp",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyOtpDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Verify OTP and login/register",
+          "tags": [
+            "Authentication"
+          ]
+        }
+      },
+      "/api/v1/auth/refresh": {
+        "post": {
+          "operationId": "AuthController_refreshToken",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokenDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Refresh access token",
+          "tags": [
+            "Authentication"
+          ]
+        }
+      },
+      "/api/v1/auth/sessions": {
+        "get": {
+          "operationId": "AuthController_listSessions",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List active sessions",
+          "tags": [
+            "Authentication"
+          ]
+        }
+      },
+      "/api/v1/auth/sessions/{sessionId}": {
+        "delete": {
+          "operationId": "AuthController_revokeSession",
+          "parameters": [
+            {
+              "name": "sessionId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Revoke a session",
+          "tags": [
+            "Authentication"
+          ]
+        }
+      },
+      "/api/v1/points/award": {
+        "post": {
+          "operationId": "PointsController_awardPoints",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AwardPointsDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Award points to a user (Admin only)",
+          "tags": [
+            "Points"
+          ]
+        }
+      },
+      "/api/v1/points/{id}/rollback": {
+        "post": {
+          "operationId": "PointsController_rollbackPoints",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RollbackPointsDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Rollback points (Admin only)",
+          "tags": [
+            "Points"
+          ]
+        }
+      },
+      "/api/v1/points/my-points": {
+        "get": {
+          "operationId": "PointsController_getMyPoints",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my total points",
+          "tags": [
+            "Points"
+          ]
+        }
+      },
+      "/api/v1/points/history": {
+        "get": {
+          "operationId": "PointsController_getMyHistory",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my points history",
+          "tags": [
+            "Points"
+          ]
+        }
+      },
+      "/api/v1/points/monthly/{month}/{year}": {
+        "get": {
+          "operationId": "PointsController_getMonthlyPoints",
+          "parameters": [
+            {
+              "name": "month",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "year",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get monthly points breakdown",
+          "tags": [
+            "Points"
+          ]
+        }
+      },
+      "/api/v1/users": {
+        "get": {
+          "operationId": "UsersController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": 10,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "role",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "admin",
+                  "manager",
+                  "visitor",
+                  "user",
+                  "seller"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "List all users (Requires user:list permission)",
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/v1/users/me": {
+        "get": {
+          "operationId": "UsersController_getMe",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get current user profile",
+          "tags": [
+            "Users"
+          ]
+        },
+        "patch": {
+          "operationId": "UsersController_updateMyProfile",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProfileDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update my profile",
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/v1/users/my-customers": {
+        "get": {
+          "operationId": "UsersController_getMyCustomers",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my customers (Visitor only)",
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/v1/users/{id}": {
+        "get": {
+          "operationId": "UsersController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get user by ID (Requires user:read permission)",
+          "tags": [
+            "Users"
+          ]
+        },
+        "patch": {
+          "operationId": "UsersController_updateProfile",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProfileDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update user profile (Requires user:update permission)",
+          "tags": [
+            "Users"
+          ]
+        }
+      },
+      "/api/v1/referrals/my-code": {
+        "get": {
+          "operationId": "ReferralsController_getMyCode",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get or create my referral code (Visitor only)",
+          "tags": [
+            "Referrals"
+          ]
+        }
+      },
+      "/api/v1/referrals/use": {
+        "post": {
+          "operationId": "ReferralsController_useReferralCode",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UseReferralDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Use a referral code",
+          "tags": [
+            "Referrals"
+          ]
+        }
+      },
+      "/api/v1/referrals/validate/{code}": {
+        "get": {
+          "operationId": "ReferralsController_validateReferralCode",
+          "parameters": [
+            {
+              "name": "code",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "summary": "Validate a referral code",
+          "tags": [
+            "Referrals"
+          ]
+        }
+      },
+      "/api/v1/referrals/my-stats": {
+        "get": {
+          "operationId": "ReferralsController_getMyStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my referral statistics (Visitor only)",
+          "tags": [
+            "Referrals"
+          ]
+        }
+      },
+      "/api/v1/levels/my-level": {
+        "get": {
+          "operationId": "LevelsController_getMyLevel",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my current level info (Visitor only)",
+          "tags": [
+            "Levels"
+          ]
+        }
+      },
+      "/api/v1/levels/history": {
+        "get": {
+          "operationId": "LevelsController_getMyHistory",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my level change history (Visitor only)",
+          "tags": [
+            "Levels"
+          ]
+        }
+      },
+      "/api/v1/levels/recalculate": {
+        "post": {
+          "operationId": "LevelsController_recalculateAllLevels",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Trigger level recalculation for all visitors (Admin only)",
+          "tags": [
+            "Levels"
+          ]
+        }
+      },
+      "/api/v1/levels/my-recalculate": {
+        "post": {
+          "operationId": "LevelsController_recalculateMyLevel",
+          "parameters": [],
+          "responses": {
+            "201": {
+              "description": ""
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Request manual level recalculation (Visitor only)",
+          "tags": [
+            "Levels"
+          ]
+        }
+      },
+      "/api/v1/health": {
+        "get": {
+          "operationId": "HealthController_check",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "The Health Check is successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "ok"
+                      },
+                      "info": {
+                        "type": "object",
+                        "example": {
+                          "database": {
+                            "status": "up"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        },
+                        "nullable": true
+                      },
+                      "error": {
+                        "type": "object",
+                        "example": {},
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        },
+                        "nullable": true
+                      },
+                      "details": {
+                        "type": "object",
+                        "example": {
+                          "database": {
+                            "status": "up"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "503": {
+              "description": "The Health Check is not successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "example": "error"
+                      },
+                      "info": {
+                        "type": "object",
+                        "example": {
+                          "database": {
+                            "status": "up"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        },
+                        "nullable": true
+                      },
+                      "error": {
+                        "type": "object",
+                        "example": {
+                          "redis": {
+                            "status": "down",
+                            "message": "Could not connect"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        },
+                        "nullable": true
+                      },
+                      "details": {
+                        "type": "object",
+                        "example": {
+                          "database": {
+                            "status": "up"
+                          },
+                          "redis": {
+                            "status": "down",
+                            "message": "Could not connect"
+                          }
+                        },
+                        "additionalProperties": {
+                          "type": "object",
+                          "required": [
+                            "status"
+                          ],
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          },
+                          "additionalProperties": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "summary": "Check application health",
+          "tags": [
+            "Health"
+          ]
+        }
+      },
+      "/api/v1/visitors": {
+        "post": {
+          "operationId": "VisitorsController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateVisitorDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Visitor created successfully"
+            }
+          },
+          "summary": "Create a new visitor",
+          "tags": [
+            "Visitors"
+          ]
+        },
+        "get": {
+          "operationId": "VisitorsController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "description": "Page number",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "description": "Items per page",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 10,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "description": "Search by name or email",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "description": "Filter by status",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "lead",
+                  "prospect",
+                  "customer"
+                ]
+              }
+            },
+            {
+              "name": "company",
+              "required": false,
+              "in": "query",
+              "description": "Filter by company",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "List of visitors"
+            }
+          },
+          "summary": "Get all visitors with pagination and filters",
+          "tags": [
+            "Visitors"
+          ]
+        }
+      },
+      "/api/v1/visitors/stats": {
+        "get": {
+          "operationId": "VisitorsController_getStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Visitor statistics"
+            }
+          },
+          "summary": "Get visitor statistics",
+          "tags": [
+            "Visitors"
+          ]
+        }
+      },
+      "/api/v1/visitors/{id}": {
+        "get": {
+          "operationId": "VisitorsController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Visitor found"
+            }
+          },
+          "summary": "Get a visitor by ID",
+          "tags": [
+            "Visitors"
+          ]
+        },
+        "patch": {
+          "operationId": "VisitorsController_update",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateVisitorDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Visitor updated successfully"
+            }
+          },
+          "summary": "Update a visitor",
+          "tags": [
+            "Visitors"
+          ]
+        },
+        "delete": {
+          "operationId": "VisitorsController_remove",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Visitor deleted successfully"
+            }
+          },
+          "summary": "Delete a visitor",
+          "tags": [
+            "Visitors"
+          ]
+        }
+      },
+      "/api/v1/categories": {
+        "post": {
+          "operationId": "CategoriesController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCategoryDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Category created successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new category",
+          "tags": [
+            "Categories"
+          ]
+        },
+        "get": {
+          "operationId": "CategoriesController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Categories retrieved successfully"
+            }
+          },
+          "summary": "Get all categories with pagination",
+          "tags": [
+            "Categories"
+          ]
+        }
+      },
+      "/api/v1/categories/slug/{slug}": {
+        "get": {
+          "operationId": "CategoriesController_findBySlug",
+          "parameters": [
+            {
+              "name": "slug",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Category found"
+            }
+          },
+          "summary": "Get category by slug",
+          "tags": [
+            "Categories"
+          ]
+        }
+      },
+      "/api/v1/categories/{id}": {
+        "get": {
+          "operationId": "CategoriesController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Category found"
+            }
+          },
+          "summary": "Get category by ID",
+          "tags": [
+            "Categories"
+          ]
+        },
+        "patch": {
+          "operationId": "CategoriesController_update",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCategoryDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Category updated successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update category",
+          "tags": [
+            "Categories"
+          ]
+        },
+        "delete": {
+          "operationId": "CategoriesController_remove",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Category deleted successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete category",
+          "tags": [
+            "Categories"
+          ]
+        }
+      },
+      "/api/v1/categories/{id}/children": {
+        "get": {
+          "operationId": "CategoriesController_findChildren",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subcategories retrieved"
+            }
+          },
+          "summary": "Get subcategories of a category",
+          "tags": [
+            "Categories"
+          ]
+        }
+      },
+      "/api/v1/products": {
+        "post": {
+          "operationId": "ProductsController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProductDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Product created successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new product (Sellers only)",
+          "tags": [
+            "Products"
+          ]
+        },
+        "get": {
+          "operationId": "ProductsController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "category",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "seller",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "draft",
+                  "active",
+                  "inactive",
+                  "out_of_stock",
+                  "archived"
+                ]
+              }
+            },
+            {
+              "name": "minPrice",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "maxPrice",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "minRating",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Products retrieved successfully"
+            }
+          },
+          "summary": "Get all products with filters and pagination",
+          "tags": [
+            "Products"
+          ]
+        }
+      },
+      "/api/v1/products/featured": {
+        "get": {
+          "operationId": "ProductsController_getFeatured",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Featured products retrieved"
+            }
+          },
+          "summary": "Get featured products",
+          "tags": [
+            "Products"
+          ]
+        }
+      },
+      "/api/v1/products/best-sellers": {
+        "get": {
+          "operationId": "ProductsController_getBestSellers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Best sellers retrieved"
+            }
+          },
+          "summary": "Get best selling products",
+          "tags": [
+            "Products"
+          ]
+        }
+      },
+      "/api/v1/products/slug/{slug}": {
+        "get": {
+          "operationId": "ProductsController_findBySlug",
+          "parameters": [
+            {
+              "name": "slug",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product found"
+            }
+          },
+          "summary": "Get product by slug",
+          "tags": [
+            "Products"
+          ]
+        }
+      },
+      "/api/v1/products/{id}": {
+        "get": {
+          "operationId": "ProductsController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product found"
+            }
+          },
+          "summary": "Get product by ID",
+          "tags": [
+            "Products"
+          ]
+        },
+        "patch": {
+          "operationId": "ProductsController_update",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateProductDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Product updated successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update product",
+          "tags": [
+            "Products"
+          ]
+        },
+        "delete": {
+          "operationId": "ProductsController_remove",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product deleted successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete product",
+          "tags": [
+            "Products"
+          ]
+        }
+      },
+      "/api/v1/sellers/register": {
+        "post": {
+          "operationId": "SellersController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSellerDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Seller registration submitted"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Register as a seller",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers": {
+        "get": {
+          "operationId": "SellersController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Sellers retrieved successfully"
+            }
+          },
+          "summary": "Get all sellers",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers/top": {
+        "get": {
+          "operationId": "SellersController_getTopSellers",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Top sellers retrieved"
+            }
+          },
+          "summary": "Get top sellers",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers/me": {
+        "get": {
+          "operationId": "SellersController_getMyProfile",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Seller profile found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my seller profile",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers/slug/{slug}": {
+        "get": {
+          "operationId": "SellersController_findBySlug",
+          "parameters": [
+            {
+              "name": "slug",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seller found"
+            }
+          },
+          "summary": "Get seller by shop slug",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers/{id}": {
+        "get": {
+          "operationId": "SellersController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seller found"
+            }
+          },
+          "summary": "Get seller by ID",
+          "tags": [
+            "Sellers"
+          ]
+        },
+        "patch": {
+          "operationId": "SellersController_update",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSellerDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Seller updated successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update seller profile",
+          "tags": [
+            "Sellers"
+          ]
+        },
+        "delete": {
+          "operationId": "SellersController_remove",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seller deleted successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete seller (Admin only)",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/sellers/{id}/verify": {
+        "patch": {
+          "operationId": "SellersController_verify",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifySellerDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Seller verification status updated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Verify or reject seller (Admin only)",
+          "tags": [
+            "Sellers"
+          ]
+        }
+      },
+      "/api/v1/activity-logs": {
+        "post": {
+          "operationId": "ActivityLogsController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateActivityLogDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Activity log created"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create activity log (System use)",
+          "tags": [
+            "Activity Logs"
+          ]
+        },
+        "get": {
+          "operationId": "ActivityLogsController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "user",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "type",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "user_login",
+                  "user_logout",
+                  "user_register",
+                  "product_create",
+                  "product_update",
+                  "product_delete",
+                  "order_create",
+                  "order_update",
+                  "order_cancel",
+                  "payment_success",
+                  "payment_failed",
+                  "seller_register",
+                  "seller_verify",
+                  "review_create",
+                  "suspicious_activity",
+                  "ip_blocked"
+                ]
+              }
+            },
+            {
+              "name": "ipAddress",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "isSuspicious",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "resourceType",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "resourceId",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Activity logs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all activity logs",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/activity-logs/my-activity": {
+        "get": {
+          "operationId": "ActivityLogsController_getMyActivity",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "User activity logs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my activity logs",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/activity-logs/suspicious": {
+        "get": {
+          "operationId": "ActivityLogsController_getSuspicious",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Suspicious activities retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get suspicious activity logs",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/activity-logs/stats/by-type": {
+        "get": {
+          "operationId": "ActivityLogsController_getStatsByType",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get activity statistics by type",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/activity-logs/stats/user/{userId}": {
+        "get": {
+          "operationId": "ActivityLogsController_getStatsByUser",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get activity statistics for a specific user",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/activity-logs/ip/{ipAddress}": {
+        "get": {
+          "operationId": "ActivityLogsController_getByIp",
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "IP activity logs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get activity logs by IP address",
+          "tags": [
+            "Activity Logs"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/high-risk": {
+        "get": {
+          "operationId": "IpTrackerController_getHighRisk",
+          "parameters": [
+            {
+              "name": "minRiskScore",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "High-risk IPs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get high-risk IP addresses",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/blacklisted": {
+        "get": {
+          "operationId": "IpTrackerController_getBlacklisted",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Blacklisted IPs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all blacklisted IP addresses",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/proxy-vpn": {
+        "get": {
+          "operationId": "IpTrackerController_getProxyVpn",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Proxy/VPN IPs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get IPs using proxy/VPN/Tor",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/user/{userId}": {
+        "get": {
+          "operationId": "IpTrackerController_getUserIps",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User IPs retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get IP addresses for a user",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/{ipAddress}": {
+        "get": {
+          "operationId": "IpTrackerController_getIpInfo",
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "IP info retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get information about an IP address",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/ip-tracker/blacklist/{ipAddress}": {
+        "post": {
+          "operationId": "IpTrackerController_blacklistIp",
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "IP blacklisted successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Blacklist an IP address",
+          "tags": [
+            "IP Tracker"
+          ]
+        },
+        "delete": {
+          "operationId": "IpTrackerController_removeFromBlacklist",
+          "parameters": [
+            {
+              "name": "ipAddress",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "IP removed from blacklist"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Remove IP from blacklist",
+          "tags": [
+            "IP Tracker"
+          ]
+        }
+      },
+      "/api/v1/anti-cheat/unresolved": {
+        "get": {
+          "operationId": "AntiCheatController_getUnresolved",
+          "parameters": [
+            {
+              "name": "limit",
+              "required": true,
+              "in": "query",
+              "schema": {
+                "type": "number"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Unresolved activities retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get unresolved suspicious activities",
+          "tags": [
+            "Anti-Cheat System"
+          ]
+        }
+      },
+      "/api/v1/anti-cheat/stats": {
+        "get": {
+          "operationId": "AntiCheatController_getStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get suspicious activity statistics by type",
+          "tags": [
+            "Anti-Cheat System"
+          ]
+        }
+      },
+      "/api/v1/anti-cheat/user-risk/{userId}": {
+        "get": {
+          "operationId": "AntiCheatController_getUserRiskScore",
+          "parameters": [
+            {
+              "name": "userId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User risk score calculated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get risk score for a user",
+          "tags": [
+            "Anti-Cheat System"
+          ]
+        }
+      },
+      "/api/v1/anti-cheat/resolve/{activityId}": {
+        "patch": {
+          "operationId": "AntiCheatController_resolveActivity",
+          "parameters": [
+            {
+              "name": "activityId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Activity resolved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Resolve a suspicious activity",
+          "tags": [
+            "Anti-Cheat System"
+          ]
+        }
+      },
+      "/api/v1/cart": {
+        "get": {
+          "operationId": "CartController_getCart",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Cart retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my cart",
+          "tags": [
+            "Cart"
+          ]
+        }
+      },
+      "/api/v1/cart/count": {
+        "get": {
+          "operationId": "CartController_getCartCount",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Cart item count retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get cart item count",
+          "tags": [
+            "Cart"
+          ]
+        }
+      },
+      "/api/v1/cart/add": {
+        "post": {
+          "operationId": "CartController_addToCart",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddToCartDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Item added to cart"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Add item to cart",
+          "tags": [
+            "Cart"
+          ]
+        }
+      },
+      "/api/v1/cart/item/{productId}": {
+        "patch": {
+          "operationId": "CartController_updateCartItem",
+          "parameters": [
+            {
+              "name": "productId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCartItemDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Cart item updated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update cart item quantity",
+          "tags": [
+            "Cart"
+          ]
+        },
+        "delete": {
+          "operationId": "CartController_removeFromCart",
+          "parameters": [
+            {
+              "name": "productId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Item removed from cart"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Remove item from cart",
+          "tags": [
+            "Cart"
+          ]
+        }
+      },
+      "/api/v1/cart/clear": {
+        "delete": {
+          "operationId": "CartController_clearCart",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Cart cleared"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Clear cart",
+          "tags": [
+            "Cart"
+          ]
+        }
+      },
+      "/api/v1/orders": {
+        "post": {
+          "operationId": "OrdersController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrderDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Order created successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a new order (checkout)",
+          "tags": [
+            "Orders"
+          ]
+        },
+        "get": {
+          "operationId": "OrdersController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "seller",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "confirmed",
+                  "processing",
+                  "shipped",
+                  "delivered",
+                  "cancelled",
+                  "refunded"
+                ]
+              }
+            },
+            {
+              "name": "paymentStatus",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "paid",
+                  "failed",
+                  "refunded",
+                  "partially_refunded"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Orders retrieved successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all orders (Admin only)",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/my-orders": {
+        "get": {
+          "operationId": "OrdersController_getMyOrders",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "seller",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "confirmed",
+                  "processing",
+                  "shipped",
+                  "delivered",
+                  "cancelled",
+                  "refunded"
+                ]
+              }
+            },
+            {
+              "name": "paymentStatus",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "paid",
+                  "failed",
+                  "refunded",
+                  "partially_refunded"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "My orders retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my orders",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/seller-orders": {
+        "get": {
+          "operationId": "OrdersController_getSellerOrders",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "seller",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "status",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "confirmed",
+                  "processing",
+                  "shipped",
+                  "delivered",
+                  "cancelled",
+                  "refunded"
+                ]
+              }
+            },
+            {
+              "name": "paymentStatus",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "paid",
+                  "failed",
+                  "refunded",
+                  "partially_refunded"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seller orders retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get orders for my shop (Sellers only)",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/stats": {
+        "get": {
+          "operationId": "OrdersController_getStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Order statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get order statistics",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/seller-stats": {
+        "get": {
+          "operationId": "OrdersController_getSellerStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Seller statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get seller order statistics",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/number/{orderNumber}": {
+        "get": {
+          "operationId": "OrdersController_findByOrderNumber",
+          "parameters": [
+            {
+              "name": "orderNumber",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Order found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get order by order number",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/{id}": {
+        "get": {
+          "operationId": "OrdersController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Order found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get order by ID",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/orders/{id}/status": {
+        "patch": {
+          "operationId": "OrdersController_updateStatus",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrderStatusDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Order status updated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update order status",
+          "tags": [
+            "Orders"
+          ]
+        }
+      },
+      "/api/v1/invoices/generate/{orderId}": {
+        "post": {
+          "operationId": "InvoicesController_createFromOrder",
+          "parameters": [
+            {
+              "name": "orderId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Invoice generated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Generate invoice from order",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices": {
+        "get": {
+          "operationId": "InvoicesController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invoices retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get all invoices (Admin only)",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/my-invoices": {
+        "get": {
+          "operationId": "InvoicesController_getMyInvoices",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Customer invoices retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my invoices",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/seller-invoices": {
+        "get": {
+          "operationId": "InvoicesController_getSellerInvoices",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Seller invoices retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get seller invoices",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/stats": {
+        "get": {
+          "operationId": "InvoicesController_getStats",
+          "parameters": [],
+          "responses": {
+            "200": {
+              "description": "Invoice statistics retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get invoice statistics",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/number/{invoiceNumber}": {
+        "get": {
+          "operationId": "InvoicesController_findByInvoiceNumber",
+          "parameters": [
+            {
+              "name": "invoiceNumber",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invoice found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get invoice by invoice number",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/order/{orderId}": {
+        "get": {
+          "operationId": "InvoicesController_findByOrder",
+          "parameters": [
+            {
+              "name": "orderId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invoice found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get invoice by order ID",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/{id}": {
+        "get": {
+          "operationId": "InvoicesController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invoice found"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get invoice by ID",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/{id}/generate-pdf": {
+        "post": {
+          "operationId": "InvoicesController_generatePdf",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "PDF generated"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Generate PDF for invoice",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/invoices/{id}/mark-paid": {
+        "post": {
+          "operationId": "InvoicesController_markAsPaid",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Invoice marked as paid"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Mark invoice as paid",
+          "tags": [
+            "Invoices"
+          ]
+        }
+      },
+      "/api/v1/reviews": {
+        "post": {
+          "operationId": "ReviewsController_create",
+          "parameters": [],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateReviewDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Review created successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Create a product review",
+          "tags": [
+            "Reviews"
+          ]
+        },
+        "get": {
+          "operationId": "ReviewsController_findAll",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "product",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "rating",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 5,
+                "type": "number"
+              }
+            },
+            {
+              "name": "isVerifiedPurchase",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "isApproved",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Reviews retrieved successfully"
+            }
+          },
+          "summary": "Get all reviews",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/product/{productId}": {
+        "get": {
+          "operationId": "ReviewsController_getProductReviews",
+          "parameters": [
+            {
+              "name": "productId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "product",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "rating",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 5,
+                "type": "number"
+              }
+            },
+            {
+              "name": "isVerifiedPurchase",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "isApproved",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product reviews retrieved"
+            }
+          },
+          "summary": "Get reviews for a product",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/product/{productId}/stats": {
+        "get": {
+          "operationId": "ReviewsController_getProductStats",
+          "parameters": [
+            {
+              "name": "productId",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Rating stats retrieved"
+            }
+          },
+          "summary": "Get product rating statistics",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/my-reviews": {
+        "get": {
+          "operationId": "ReviewsController_getMyReviews",
+          "parameters": [
+            {
+              "name": "page",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "default": 1,
+                "type": "number"
+              }
+            },
+            {
+              "name": "limit",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 100,
+                "default": 20,
+                "type": "number"
+              }
+            },
+            {
+              "name": "search",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortBy",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "sortOrder",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "default": "desc",
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              }
+            },
+            {
+              "name": "product",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "customer",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "rating",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "minimum": 1,
+                "maximum": 5,
+                "type": "number"
+              }
+            },
+            {
+              "name": "isVerifiedPurchase",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            {
+              "name": "isApproved",
+              "required": false,
+              "in": "query",
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Customer reviews retrieved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Get my reviews",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/{id}": {
+        "get": {
+          "operationId": "ReviewsController_findOne",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Review found"
+            }
+          },
+          "summary": "Get review by ID",
+          "tags": [
+            "Reviews"
+          ]
+        },
+        "patch": {
+          "operationId": "ReviewsController_update",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateReviewDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Review updated successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Update my review",
+          "tags": [
+            "Reviews"
+          ]
+        },
+        "delete": {
+          "operationId": "ReviewsController_remove",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Review deleted successfully"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Delete review",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/{id}/approve": {
+        "patch": {
+          "operationId": "ReviewsController_approve",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Review approved"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Approve review (Admin only)",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/{id}/seller-response": {
+        "post": {
+          "operationId": "ReviewsController_addSellerResponse",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SellerResponseDto"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Seller response added"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Add seller response to review",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      },
+      "/api/v1/reviews/{id}/helpful": {
+        "post": {
+          "operationId": "ReviewsController_markHelpful",
+          "parameters": [
+            {
+              "name": "id",
+              "required": true,
+              "in": "path",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Review marked as helpful"
+            }
+          },
+          "security": [
+            {
+              "bearer": []
+            }
+          ],
+          "summary": "Mark review as helpful",
+          "tags": [
+            "Reviews"
+          ]
+        }
+      }
+    },
+    "info": {
+      "title": "Visitor CRM & Marketplace API",
+      "description": "Complete CRM with Authentication, Referrals, Points, Levels, and Full Marketplace Features",
+      "version": "1.0",
+      "contact": {}
+    },
+    "tags": [
+      {
+        "name": "Authentication",
+        "description": "OTP and JWT authentication"
+      },
+      {
+        "name": "Users",
+        "description": "User management and profiles"
+      },
+      {
+        "name": "Settings",
+        "description": "System settings and configuration"
+      },
+      {
+        "name": "Referrals",
+        "description": "Referral code management"
+      },
+      {
+        "name": "Points",
+        "description": "Points tracking and management"
+      },
+      {
+        "name": "Levels",
+        "description": "Visitor level system"
+      },
+      {
+        "name": "Visitors",
+        "description": "Visitor management"
+      },
+      {
+        "name": "Health",
+        "description": "Health check endpoints"
+      },
+      {
+        "name": "Categories",
+        "description": "Product category management"
+      },
+      {
+        "name": "Products",
+        "description": "Product catalog and inventory management"
+      },
+      {
+        "name": "Sellers",
+        "description": "Seller registration and verification"
+      },
+      {
+        "name": "Activity Logs",
+        "description": "System activity tracking and logs"
+      },
+      {
+        "name": "IP Tracker",
+        "description": "IP address tracking and geolocation"
+      },
+      {
+        "name": "Anti-Cheat System",
+        "description": "Fraud detection and prevention"
+      },
+      {
+        "name": "Cart",
+        "description": "Shopping cart management"
+      },
+      {
+        "name": "Orders",
+        "description": "Order processing and management"
+      },
+      {
+        "name": "Invoices",
+        "description": "Invoice generation and management"
+      },
+      {
+        "name": "Reviews",
+        "description": "Product reviews and ratings"
+      }
+    ],
+    "servers": [],
+    "components": {
+      "securitySchemes": {
+        "bearer": {
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "type": "http"
+        }
+      },
+      "schemas": {
+        "UpdatePointRuleDto": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string"
+            },
+            "points": {
+              "type": "number"
+            },
+            "enabled": {
+              "type": "boolean"
+            }
+          }
+        },
+        "UpdateLevelSettingsDto": {
+          "type": "object",
+          "properties": {
+            "minPoints": {
+              "type": "number"
+            },
+            "minSales": {
+              "type": "number"
+            },
+            "minCustomers": {
+              "type": "number"
+            },
+            "benefits": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "SendOtpDto": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": "string",
+              "example": "+989123456789",
+              "description": "Phone number with country code"
+            },
+            "deviceId": {
+              "type": "string",
+              "example": "device-fingerprint-123"
+            }
+          },
+          "required": [
+            "phone"
+          ]
+        },
+        "VerifyOtpDto": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": "string",
+              "example": "+989123456789"
+            },
+            "otp": {
+              "type": "string",
+              "example": "123456"
+            },
+            "deviceId": {
+              "type": "string",
+              "example": "device-fingerprint-123"
+            },
+            "referralCode": {
+              "type": "string",
+              "example": "JOHN-1234",
+              "description": "Referral code if new user"
+            }
+          },
+          "required": [
+            "phone",
+            "otp",
+            "deviceId"
+          ]
+        },
+        "RefreshTokenDto": {
+          "type": "object",
+          "properties": {
+            "refreshToken": {
+              "type": "string"
+            },
+            "deviceId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "refreshToken",
+            "deviceId"
+          ]
+        },
+        "AwardPointsDto": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "activity",
+                "sales",
+                "referral",
+                "task"
+              ]
+            },
+            "source": {
+              "type": "string",
+              "enum": [
+                "referral",
+                "sale",
+                "task",
+                "admin",
+                "system"
+              ]
+            },
+            "amount": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "referenceId": {
+              "type": "string"
+            },
+            "relatedUserId": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "userId",
+            "type",
+            "source",
+            "amount"
+          ]
+        },
+        "RollbackPointsDto": {
+          "type": "object",
+          "properties": {
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "reason"
+          ]
+        },
+        "UpdateProfileDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "avatar": {
+              "type": "string"
+            },
+            "activityRegion": {
+              "type": "string"
+            },
+            "activityCity": {
+              "type": "string"
+            },
+            "personalDetails": {
+              "type": "object"
+            }
+          }
+        },
+        "UseReferralDto": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "example": "AMIR-1234"
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "view",
+                "login",
+                "signup"
+              ]
+            }
+          },
+          "required": [
+            "code",
+            "action"
+          ]
+        },
+        "CreateVisitorDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Visitor full name",
+              "example": "John Doe"
+            },
+            "email": {
+              "type": "string",
+              "description": "Visitor email address",
+              "example": "john@example.com"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Visitor phone number",
+              "example": "+1234567890"
+            },
+            "company": {
+              "type": "string",
+              "description": "Visitor company name",
+              "example": "Acme Corp"
+            },
+            "status": {
+              "type": "string",
+              "description": "Visitor status",
+              "enum": [
+                "lead",
+                "prospect",
+                "customer"
+              ],
+              "default": "lead"
+            },
+            "tags": {
+              "description": "Tags associated with visitor",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "metadata": {
+              "type": "object",
+              "description": "Additional metadata"
+            },
+            "isActive": {
+              "type": "boolean",
+              "description": "Is visitor active",
+              "default": true
+            }
+          },
+          "required": [
+            "name",
+            "email"
+          ]
+        },
+        "UpdateVisitorDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Visitor full name",
+              "example": "John Doe"
+            },
+            "email": {
+              "type": "string",
+              "description": "Visitor email address",
+              "example": "john@example.com"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Visitor phone number",
+              "example": "+1234567890"
+            },
+            "company": {
+              "type": "string",
+              "description": "Visitor company name",
+              "example": "Acme Corp"
+            },
+            "status": {
+              "type": "string",
+              "description": "Visitor status",
+              "enum": [
+                "lead",
+                "prospect",
+                "customer"
+              ],
+              "default": "lead"
+            },
+            "tags": {
+              "description": "Tags associated with visitor",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "metadata": {
+              "type": "object",
+              "description": "Additional metadata"
+            },
+            "isActive": {
+              "type": "boolean",
+              "description": "Is visitor active",
+              "default": true
+            }
+          }
+        },
+        "CreateCategoryDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Electronics"
+            },
+            "slug": {
+              "type": "string",
+              "example": "electronics"
+            },
+            "description": {
+              "type": "string",
+              "example": "All electronic devices"
+            },
+            "image": {
+              "type": "string",
+              "example": "https://example.com/image.jpg"
+            },
+            "parent": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "isActive": {
+              "type": "boolean",
+              "example": true,
+              "default": true
+            },
+            "sortOrder": {
+              "type": "number",
+              "example": 0
+            },
+            "metaTags": {
+              "example": [
+                "electronics",
+                "gadgets"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "name",
+            "slug"
+          ]
+        },
+        "UpdateCategoryDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "Electronics"
+            },
+            "slug": {
+              "type": "string",
+              "example": "electronics"
+            },
+            "description": {
+              "type": "string",
+              "example": "All electronic devices"
+            },
+            "image": {
+              "type": "string",
+              "example": "https://example.com/image.jpg"
+            },
+            "parent": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "isActive": {
+              "type": "boolean",
+              "example": true,
+              "default": true
+            },
+            "sortOrder": {
+              "type": "number",
+              "example": 0
+            },
+            "metaTags": {
+              "example": [
+                "electronics",
+                "gadgets"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "ShippingDto": {
+          "type": "object",
+          "properties": {
+            "weight": {
+              "type": "number"
+            },
+            "dimensions": {
+              "type": "object"
+            },
+            "freeShipping": {
+              "type": "boolean"
+            },
+            "shippingCost": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "freeShipping"
+          ]
+        },
+        "CreateProductDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "iPhone 15 Pro"
+            },
+            "slug": {
+              "type": "string",
+              "example": "iphone-15-pro"
+            },
+            "description": {
+              "type": "string",
+              "example": "Latest iPhone model"
+            },
+            "category": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "price": {
+              "type": "number",
+              "example": 999.99
+            },
+            "discountPrice": {
+              "type": "number",
+              "example": 899.99
+            },
+            "discountPercentage": {
+              "type": "number",
+              "example": 10
+            },
+            "images": {
+              "example": [
+                "image1.jpg",
+                "image2.jpg"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stock": {
+              "type": "number",
+              "example": 100
+            },
+            "minOrderQuantity": {
+              "type": "number",
+              "example": 1
+            },
+            "maxOrderQuantity": {
+              "type": "number",
+              "example": 10
+            },
+            "sku": {
+              "type": "string",
+              "example": "SKU123456"
+            },
+            "barcode": {
+              "type": "string",
+              "example": "1234567890123"
+            },
+            "brand": {
+              "type": "string",
+              "example": "Apple"
+            },
+            "specifications": {
+              "type": "object",
+              "example": {
+                "color": "Black",
+                "storage": "256GB"
+              }
+            },
+            "tags": {
+              "example": [
+                "smartphone",
+                "apple",
+                "iphone"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "active",
+                "inactive",
+                "out_of_stock",
+                "archived"
+              ],
+              "default": "draft"
+            },
+            "isFeatured": {
+              "type": "boolean",
+              "example": false
+            },
+            "shipping": {
+              "$ref": "#/components/schemas/ShippingDto"
+            },
+            "metaTags": {
+              "example": [
+                "electronics",
+                "phones"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "metaDescription": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "slug",
+            "description",
+            "category",
+            "price",
+            "stock"
+          ]
+        },
+        "UpdateProductDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "example": "iPhone 15 Pro"
+            },
+            "slug": {
+              "type": "string",
+              "example": "iphone-15-pro"
+            },
+            "description": {
+              "type": "string",
+              "example": "Latest iPhone model"
+            },
+            "category": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "price": {
+              "type": "number",
+              "example": 999.99
+            },
+            "discountPrice": {
+              "type": "number",
+              "example": 899.99
+            },
+            "discountPercentage": {
+              "type": "number",
+              "example": 10
+            },
+            "images": {
+              "example": [
+                "image1.jpg",
+                "image2.jpg"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "stock": {
+              "type": "number",
+              "example": 100
+            },
+            "minOrderQuantity": {
+              "type": "number",
+              "example": 1
+            },
+            "maxOrderQuantity": {
+              "type": "number",
+              "example": 10
+            },
+            "sku": {
+              "type": "string",
+              "example": "SKU123456"
+            },
+            "barcode": {
+              "type": "string",
+              "example": "1234567890123"
+            },
+            "brand": {
+              "type": "string",
+              "example": "Apple"
+            },
+            "specifications": {
+              "type": "object",
+              "example": {
+                "color": "Black",
+                "storage": "256GB"
+              }
+            },
+            "tags": {
+              "example": [
+                "smartphone",
+                "apple",
+                "iphone"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "active",
+                "inactive",
+                "out_of_stock",
+                "archived"
+              ],
+              "default": "draft"
+            },
+            "isFeatured": {
+              "type": "boolean",
+              "example": false
+            },
+            "shipping": {
+              "$ref": "#/components/schemas/ShippingDto"
+            },
+            "metaTags": {
+              "example": [
+                "electronics",
+                "phones"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "metaDescription": {
+              "type": "string"
+            }
+          }
+        },
+        "BusinessAddressDto": {
+          "type": "object",
+          "properties": {
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "street",
+            "city",
+            "state",
+            "postalCode",
+            "country"
+          ]
+        },
+        "BankDetailsDto": {
+          "type": "object",
+          "properties": {
+            "accountName": {
+              "type": "string"
+            },
+            "accountNumber": {
+              "type": "string"
+            },
+            "bankName": {
+              "type": "string"
+            },
+            "branchCode": {
+              "type": "string"
+            },
+            "iban": {
+              "type": "string"
+            },
+            "swiftCode": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accountName",
+            "accountNumber",
+            "bankName"
+          ]
+        },
+        "SellerSettingsDto": {
+          "type": "object",
+          "properties": {
+            "autoAcceptOrders": {
+              "type": "boolean",
+              "default": true
+            },
+            "vacationMode": {
+              "type": "boolean",
+              "default": false
+            },
+            "minOrderAmount": {
+              "type": "number"
+            },
+            "processingTime": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "autoAcceptOrders",
+            "vacationMode"
+          ]
+        },
+        "CreateSellerDto": {
+          "type": "object",
+          "properties": {
+            "shopName": {
+              "type": "string",
+              "example": "My Awesome Shop"
+            },
+            "shopSlug": {
+              "type": "string",
+              "example": "my-awesome-shop"
+            },
+            "shopDescription": {
+              "type": "string"
+            },
+            "shopLogo": {
+              "type": "string"
+            },
+            "shopBanner": {
+              "type": "string"
+            },
+            "businessName": {
+              "type": "string"
+            },
+            "businessRegistrationNumber": {
+              "type": "string"
+            },
+            "taxNumber": {
+              "type": "string"
+            },
+            "businessAddress": {
+              "$ref": "#/components/schemas/BusinessAddressDto"
+            },
+            "contactPhone": {
+              "type": "string"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "bankDetails": {
+              "$ref": "#/components/schemas/BankDetailsDto"
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "settings": {
+              "$ref": "#/components/schemas/SellerSettingsDto"
+            }
+          },
+          "required": [
+            "shopName",
+            "shopSlug",
+            "businessName",
+            "businessRegistrationNumber",
+            "taxNumber",
+            "businessAddress",
+            "contactPhone",
+            "contactEmail",
+            "bankDetails"
+          ]
+        },
+        "UpdateSellerDto": {
+          "type": "object",
+          "properties": {
+            "shopName": {
+              "type": "string",
+              "example": "My Awesome Shop"
+            },
+            "shopSlug": {
+              "type": "string",
+              "example": "my-awesome-shop"
+            },
+            "shopDescription": {
+              "type": "string"
+            },
+            "shopLogo": {
+              "type": "string"
+            },
+            "shopBanner": {
+              "type": "string"
+            },
+            "businessName": {
+              "type": "string"
+            },
+            "businessRegistrationNumber": {
+              "type": "string"
+            },
+            "taxNumber": {
+              "type": "string"
+            },
+            "businessAddress": {
+              "$ref": "#/components/schemas/BusinessAddressDto"
+            },
+            "contactPhone": {
+              "type": "string"
+            },
+            "contactEmail": {
+              "type": "string"
+            },
+            "bankDetails": {
+              "$ref": "#/components/schemas/BankDetailsDto"
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "settings": {
+              "$ref": "#/components/schemas/SellerSettingsDto"
+            }
+          }
+        },
+        "VerifySellerDto": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "verified",
+                "rejected"
+              ]
+            },
+            "rejectionReason": {
+              "type": "string"
+            },
+            "commissionRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "status"
+          ]
+        },
+        "CreateActivityLogDto": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "user_login",
+                "user_logout",
+                "user_register",
+                "product_create",
+                "product_update",
+                "product_delete",
+                "order_create",
+                "order_update",
+                "order_cancel",
+                "payment_success",
+                "payment_failed",
+                "seller_register",
+                "seller_verify",
+                "review_create",
+                "suspicious_activity",
+                "ip_blocked"
+              ]
+            },
+            "action": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object"
+            },
+            "ipAddress": {
+              "type": "string"
+            },
+            "userAgent": {
+              "type": "string"
+            },
+            "location": {
+              "type": "object"
+            },
+            "resourceType": {
+              "type": "string"
+            },
+            "resourceId": {
+              "type": "string"
+            },
+            "changes": {
+              "type": "object"
+            },
+            "result": {
+              "type": "string"
+            },
+            "isSuspicious": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "type",
+            "action"
+          ]
+        },
+        "AddToCartDto": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "quantity": {
+              "type": "number",
+              "example": 1,
+              "minimum": 1
+            }
+          },
+          "required": [
+            "productId",
+            "quantity"
+          ]
+        },
+        "UpdateCartItemDto": {
+          "type": "object",
+          "properties": {
+            "quantity": {
+              "type": "number",
+              "example": 2,
+              "minimum": 1
+            }
+          },
+          "required": [
+            "quantity"
+          ]
+        },
+        "ShippingAddressDto": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "street": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "postalCode": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "phone",
+            "street",
+            "city",
+            "state",
+            "postalCode",
+            "country"
+          ]
+        },
+        "CreateOrderDto": {
+          "type": "object",
+          "properties": {
+            "paymentMethod": {
+              "type": "string",
+              "enum": [
+                "cash_on_delivery",
+                "card",
+                "bank_transfer",
+                "wallet"
+              ]
+            },
+            "shippingAddress": {
+              "$ref": "#/components/schemas/ShippingAddressDto"
+            },
+            "billingAddress": {
+              "$ref": "#/components/schemas/ShippingAddressDto"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "paymentMethod",
+            "shippingAddress"
+          ]
+        },
+        "UpdateOrderStatusDto": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "confirmed",
+                "processing",
+                "shipped",
+                "delivered",
+                "cancelled",
+                "refunded"
+              ]
+            },
+            "trackingNumber": {
+              "type": "string"
+            },
+            "cancellationReason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status"
+          ]
+        },
+        "CreateReviewDto": {
+          "type": "object",
+          "properties": {
+            "productId": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "orderId": {
+              "type": "string",
+              "example": "507f1f77bcf86cd799439011"
+            },
+            "rating": {
+              "type": "number",
+              "example": 5,
+              "minimum": 1,
+              "maximum": 5
+            },
+            "comment": {
+              "type": "string",
+              "example": "Great product! Highly recommended."
+            },
+            "images": {
+              "example": [
+                "image1.jpg",
+                "image2.jpg"
+              ],
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "productId",
+            "rating",
+            "comment"
+          ]
+        },
+        "UpdateReviewDto": {
+          "type": "object",
+          "properties": {
+            "rating": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "comment": {
+              "type": "string"
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "SellerResponseDto": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Thank you for your review!"
+            }
+          },
+          "required": [
+            "message"
+          ]
+        }
+      }
+    }
+  },
+  "customOptions": {
+    "persistAuthorization": true,
+    "tagsSorter": "alpha",
+    "operationsSorter": "alpha"
+  }
+};
+  url = options.swaggerUrl || url
+  let urls = options.swaggerUrls
+  let customOptions = options.customOptions
+  let spec1 = options.swaggerDoc
+  let swaggerOptions = {
+    spec: spec1,
+    url: url,
+    urls: urls,
+    dom_id: '#swagger-ui',
+    deepLinking: true,
+    presets: [
+      SwaggerUIBundle.presets.apis,
+      SwaggerUIStandalonePreset
+    ],
+    plugins: [
+      SwaggerUIBundle.plugins.DownloadUrl
+    ],
+    layout: "StandaloneLayout"
+  }
+  for (let attrname in customOptions) {
+    swaggerOptions[attrname] = customOptions[attrname];
+  }
+  let ui = SwaggerUIBundle(swaggerOptions)
+
+  if (customOptions.initOAuth) {
+    ui.initOAuth(customOptions.initOAuth)
+  }
+
+  if (customOptions.authAction) {
+    ui.authActions.authorize(customOptions.authAction)
+  }
+  
+  window.ui = ui
+}

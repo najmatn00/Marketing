@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import api from "@/lib/apiProvider";
-import { SendOtpDto, VerifyOtpDto } from "@/types/api.types";
+import { SendOtpDto, VerifyOtpDto, AuthResponse } from "@/types/api.types";
 
 // Form schemas
 const phoneSchema = z.object({
@@ -27,6 +29,7 @@ type PhoneForm = z.infer<typeof phoneSchema>;
 type OtpForm = z.infer<typeof otpSchema>;
 
 export default function AuthPage() {
+  const router = useRouter();
   const [otpScreen, setOtpScreen] = useState(false);
   const [token, setToken] = useState("");
   const [message, setMessage] = useState("");
@@ -75,9 +78,38 @@ export default function AuthPage() {
         otp: data.otp,
         deviceId,
       };
-      const { data: result } = await api.post("/auth/otp/verify", payload);
+      const { data: result } = await api.post<AuthResponse>("/auth/otp/verify", payload);
+
+      // Store tokens in cookies
+      if (result.accessToken) {
+        Cookies.set("accessToken", result.accessToken, {
+          expires: 7, // 7 days
+          sameSite: "strict",
+          secure: process.env.NODE_ENV === "production"
+        });
+      }
+
+      if (result.refreshToken) {
+        Cookies.set("refreshToken", result.refreshToken, {
+          expires: 30, // 30 days
+          sameSite: "strict",
+          secure: process.env.NODE_ENV === "production"
+        });
+      }
+
       setToken(result.accessToken || "ورود موفقیت آمیز بود");
       setMessage("ورود موفقیت آمیز بود!");
+
+      // Redirect to dashboard after 1.5 seconds
+      setTimeout(() => {
+        if (result.user?.role === "seller") {
+          router.push("/seller/dashboard");
+        } else if (result.user?.role === "admin") {
+          router.push("/admin");
+        } else {
+          router.push("/");
+        }
+      }, 1500);
     } catch (error: any) {
       setMessage(error?.response?.data?.message || "کد وارد شده صحیح نیست!");
     } finally {
