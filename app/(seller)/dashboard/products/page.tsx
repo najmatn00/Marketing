@@ -136,129 +136,127 @@ export default function ProductsPage() {
   };
 
   return (
-    <div dir="rtl" className="min-h-screen bg-white">
-      <div className="max-w-[1400px] mx-auto px-6 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-light text-gray-900">محصولات</h1>
-            <p className="text-sm text-gray-500 mt-1">مدیریت محصولات فروشگاه</p>
-          </div>
-          <button className="px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
-            + افزودن محصول
-          </button>
+    <>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h2 className="text-xl font-light text-gray-900">محصولات</h2>
+          <p className="text-sm text-gray-500 mt-1">مدیریت محصولات فروشگاه</p>
         </div>
+        <button className="px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
+          + افزودن محصول
+        </button>
+      </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="border border-gray-200 p-4">
-            <p className="text-xs text-gray-500 mb-1">کل محصولات</p>
-            <p className="text-xl font-light text-gray-900">{formatNumber(products.length)}</p>
-          </div>
-          <div className="border border-gray-200 p-4">
-            <p className="text-xs text-gray-500 mb-1">فعال</p>
-            <p className="text-xl font-light text-gray-900">
-              {formatNumber(products.filter((p) => p.status === "active").length)}
-            </p>
-          </div>
-          <div className="border border-gray-200 p-4">
-            <p className="text-xs text-gray-500 mb-1">ناموجود</p>
-            <p className="text-xl font-light text-gray-900">
-              {formatNumber(products.filter((p) => p.status === "out_of_stock").length)}
-            </p>
-          </div>
-          <div className="border border-gray-200 p-4">
-            <p className="text-xs text-gray-500 mb-1">کل فروش</p>
-            <p className="text-xl font-light text-gray-900">
-              {formatNumber(products.reduce((sum, p) => sum + (p.soldCount || 0), 0))}
-            </p>
-          </div>
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="border border-gray-200 p-4">
+          <p className="text-xs text-gray-500 mb-1">کل محصولات</p>
+          <p className="text-xl font-light text-gray-900">{formatNumber(products.length)}</p>
         </div>
-
-        {/* Products List */}
-        <div className="border border-gray-200">
-          {/* Table Header */}
-          <div className="hidden md:grid md:grid-cols-12 gap-4 p-4 border-b border-gray-200 bg-gray-50">
-            <div className="col-span-4 text-xs font-medium text-gray-700">نام محصول</div>
-            <div className="col-span-2 text-xs font-medium text-gray-700">قیمت</div>
-            <div className="col-span-1 text-xs font-medium text-gray-700">موجودی</div>
-            <div className="col-span-1 text-xs font-medium text-gray-700">فروش</div>
-            <div className="col-span-2 text-xs font-medium text-gray-700">امتیاز</div>
-            <div className="col-span-2 text-xs font-medium text-gray-700">وضعیت</div>
-          </div>
-
-          {/* Products */}
-          {products.length > 0 ? (
-            <div className="divide-y divide-gray-100">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer"
-                >
-                  {/* Product Name */}
-                  <div className="col-span-1 md:col-span-4">
-                    <p className="text-sm font-medium text-gray-900">{product.name}</p>
-                    <p className="text-xs text-gray-500 mt-1 line-clamp-1">{product.description}</p>
-                    {product.featured && (
-                      <span className="inline-block mt-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5">
-                        ویژه
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Price */}
-                  <div className="col-span-1 md:col-span-2">
-                    <p className="text-sm text-gray-900">{formatCurrency(product.price)}</p>
-                    {product.compareAtPrice && (
-                      <p className="text-xs text-gray-400 line-through mt-1">
-                        {formatCurrency(product.compareAtPrice)}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Stock */}
-                  <div className="col-span-1 md:col-span-1">
-                    <p className={`text-sm ${product.stock === 0 ? "text-red-600" : "text-gray-900"}`}>
-                      {formatNumber(product.stock)}
-                    </p>
-                  </div>
-
-                  {/* Sold */}
-                  <div className="col-span-1 md:col-span-1">
-                    <p className="text-sm text-gray-900">{formatNumber(product.soldCount || 0)}</p>
-                  </div>
-
-                  {/* Rating */}
-                  <div className="col-span-1 md:col-span-2">
-                    {product.rating && (
-                      <div>
-                        <p className="text-sm text-gray-900">⭐ {product.rating.toFixed(1)}</p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {formatNumber(product.reviewCount || 0)} نظر
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Status */}
-                  <div className="col-span-1 md:col-span-2">
-                    <span className={`inline-block text-xs px-3 py-1 ${getStatusColor(product.status)}`}>
-                      {getStatusLabel(product.status)}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="p-12 text-center">
-              <p className="text-sm text-gray-400">هنوز محصولی ثبت نشده است</p>
-              <button className="mt-4 px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
-                افزودن اولین محصول
-              </button>
-            </div>
-          )}
+        <div className="border border-gray-200 p-4">
+          <p className="text-xs text-gray-500 mb-1">فعال</p>
+          <p className="text-xl font-light text-gray-900">
+            {formatNumber(products.filter((p) => p.status === "active").length)}
+          </p>
+        </div>
+        <div className="border border-gray-200 p-4">
+          <p className="text-xs text-gray-500 mb-1">ناموجود</p>
+          <p className="text-xl font-light text-gray-900">
+            {formatNumber(products.filter((p) => p.status === "out_of_stock").length)}
+          </p>
+        </div>
+        <div className="border border-gray-200 p-4">
+          <p className="text-xs text-gray-500 mb-1">کل فروش</p>
+          <p className="text-xl font-light text-gray-900">
+            {formatNumber(products.reduce((sum, p) => sum + (p.soldCount || 0), 0))}
+          </p>
         </div>
       </div>
-    </div>
+
+      {/* Products List */}
+      <div className="border border-gray-200">
+        {/* Table Header */}
+        <div className="hidden md:grid md:grid-cols-12 gap-4 p-4 border-b border-gray-200 bg-gray-50">
+          <div className="col-span-4 text-xs font-medium text-gray-700">نام محصول</div>
+          <div className="col-span-2 text-xs font-medium text-gray-700">قیمت</div>
+          <div className="col-span-1 text-xs font-medium text-gray-700">موجودی</div>
+          <div className="col-span-1 text-xs font-medium text-gray-700">فروش</div>
+          <div className="col-span-2 text-xs font-medium text-gray-700">امتیاز</div>
+          <div className="col-span-2 text-xs font-medium text-gray-700">وضعیت</div>
+        </div>
+
+        {/* Products */}
+        {products.length > 0 ? (
+          <div className="divide-y divide-gray-100">
+            {products.map((product) => (
+              <div
+                key={product.id}
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+              >
+                {/* Product Name */}
+                <div className="col-span-1 md:col-span-4">
+                  <p className="text-sm font-medium text-gray-900">{product.name}</p>
+                  <p className="text-xs text-gray-500 mt-1 line-clamp-1">{product.description}</p>
+                  {product.featured && (
+                    <span className="inline-block mt-2 text-xs bg-blue-100 text-blue-800 px-2 py-0.5">
+                      ویژه
+                    </span>
+                  )}
+                </div>
+
+                {/* Price */}
+                <div className="col-span-1 md:col-span-2">
+                  <p className="text-sm text-gray-900">{formatCurrency(product.price)}</p>
+                  {product.compareAtPrice && (
+                    <p className="text-xs text-gray-400 line-through mt-1">
+                      {formatCurrency(product.compareAtPrice)}
+                    </p>
+                  )}
+                </div>
+
+                {/* Stock */}
+                <div className="col-span-1 md:col-span-1">
+                  <p className={`text-sm ${product.stock === 0 ? "text-red-600" : "text-gray-900"}`}>
+                    {formatNumber(product.stock)}
+                  </p>
+                </div>
+
+                {/* Sold */}
+                <div className="col-span-1 md:col-span-1">
+                  <p className="text-sm text-gray-900">{formatNumber(product.soldCount || 0)}</p>
+                </div>
+
+                {/* Rating */}
+                <div className="col-span-1 md:col-span-2">
+                  {product.rating && (
+                    <div>
+                      <p className="text-sm text-gray-900">⭐ {product.rating.toFixed(1)}</p>
+                      <p className="text-xs text-gray-500 mt-1">
+                        {formatNumber(product.reviewCount || 0)} نظر
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Status */}
+                <div className="col-span-1 md:col-span-2">
+                  <span className={`inline-block text-xs px-3 py-1 ${getStatusColor(product.status)}`}>
+                    {getStatusLabel(product.status)}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="p-12 text-center">
+            <p className="text-sm text-gray-400">هنوز محصولی ثبت نشده است</p>
+            <button className="mt-4 px-6 py-2 bg-gray-900 text-white text-sm hover:bg-gray-700 transition-colors">
+              افزودن اولین محصول
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
