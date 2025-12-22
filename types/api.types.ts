@@ -21,6 +21,11 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   user: User;
+  session: {
+    id: string;
+    expiresAt: string;
+  };
+  isNewUser: boolean;
 }
 
 export interface Session {
@@ -99,14 +104,28 @@ export interface MonthlyPointsBreakdown {
 export type UserRole = 'admin' | 'manager' | 'visitor' | 'user' | 'seller';
 
 export interface User {
-  id: string;
+  _id: string;
+  id?: string;
+  name: string;
   phone: string;
   firstName?: string;
   lastName?: string;
   email?: string;
   role: UserRole;
+  permissions: string[];
+  isActive: boolean;
+  phoneUpdateHistory: any[];
+  activeCustomersCount: number;
+  currentMonthSales: number;
+  visitorLevel: number;
+  totalPoints: number;
+  referralCode: string;
+  referredAt?: string;
+  referralCount: number;
   createdAt: string;
   updatedAt: string;
+  lastLoginAt?: string;
+  lastLoginIp?: string;
 }
 
 export interface PaginatedUsers {
@@ -462,8 +481,10 @@ export interface UserFilters extends PaginationParams, SearchParams {
 /** ---- API RESPONSE WRAPPER ----- */
 export interface ApiResponse<T> {
   data: T;
+  statusCode: number;
+  timestamp: string;
   message?: string;
-  success: boolean;
+  success?: boolean;
 }
 
 export interface ApiError {

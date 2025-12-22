@@ -88,13 +88,13 @@ api.interceptors.response.use(
 
       try {
         // Attempt to refresh the token
-        const { data } = await axios.post(
+        const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API_URL || "/api/v1"}/auth/refresh`,
           { refreshToken },
           { withCredentials: true }
         );
 
-        const { accessToken, refreshToken: newRefreshToken } = data;
+        const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
         // Store new tokens
         Cookies.set("accessToken", accessToken, {

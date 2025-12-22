@@ -7,7 +7,12 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import api from "@/lib/apiProvider";
-import { SendOtpDto, VerifyOtpDto, AuthResponse } from "@/types/api.types";
+import {
+  SendOtpDto,
+  VerifyOtpDto,
+  AuthResponse,
+  ApiResponse,
+} from "@/types/api.types";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Phone, Lock } from "lucide-react";
 
@@ -25,6 +30,7 @@ const otpSchema = z.object({
     .min(4, "کد حداقل ۴ رقم")
     .max(8, "کد حداکثر ۸ رقم")
     .regex(/^\d+$/, "کد فقط شامل اعداد باشد"),
+  referralCode: z.string().optional(),
 });
 
 type PhoneForm = z.infer<typeof phoneSchema>;
@@ -50,7 +56,7 @@ export default function AuthPage() {
   // OTP form
   const otpForm = useForm<OtpForm>({
     resolver: zodResolver(otpSchema),
-    defaultValues: { otp: "" },
+    defaultValues: { otp: "", referralCode: "" },
   });
 
   async function handleSendOtp(data: PhoneForm) {
@@ -79,11 +85,14 @@ export default function AuthPage() {
         phone: phoneValue,
         otp: data.otp,
         deviceId,
+        referralCode: data.referralCode ? data.referralCode : " ",
       };
-      const { data: result } = await api.post<AuthResponse>(
+      const response = await api.post<ApiResponse<AuthResponse>>(
         "/auth/otp/verify",
         payload
       );
+
+      const result = response.data.data;
 
       // Store tokens in cookies
       if (result.accessToken) {
@@ -103,7 +112,13 @@ export default function AuthPage() {
       }
 
       setToken(result.accessToken || "ورود موفقیت آمیز بود");
-      setMessage("ورود موفقیت آمیز بود!");
+
+      // Show different message for new users
+      if (result.isNewUser) {
+        setMessage("حساب کاربری شما با موفقیت ایجاد شد! خوش آمدید");
+      } else {
+        setMessage("ورود موفقیت آمیز بود!");
+      }
 
       // Redirect to dashboard after 1.5 seconds
       setTimeout(() => {
@@ -216,6 +231,28 @@ export default function AuthPage() {
               {otpForm.formState.errors.otp && (
                 <p className="text-sm text-red-600 dark:text-red-400 mt-1">
                   {otpForm.formState.errors.otp.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="referralCode"
+                className="block text-sm font-medium text-foreground mb-2"
+              >
+                کد معرف (اختیاری)
+              </label>
+              <input
+                id="referralCode"
+                type="text"
+                placeholder="کد معرف خود را وارد کنید"
+                disabled={loading}
+                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-light-grey dark:border-gray-600 text-foreground placeholder:text-grey rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                {...otpForm.register("referralCode")}
+              />
+              {otpForm.formState.errors.referralCode && (
+                <p className="text-sm text-red-600 dark:text-red-400 mt-1">
+                  {otpForm.formState.errors.referralCode.message}
                 </p>
               )}
             </div>

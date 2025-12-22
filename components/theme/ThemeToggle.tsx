@@ -17,7 +17,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex items-center gap-2 rounded-xl border border-light-grey bg-white/70 px-3 py-2 text-sm font-medium text-foreground shadow-sm hover:bg-white transition-colors"
+      className="inline-flex items-center gap-2 rounded-xl border border-light-grey bg-primary/70 px-3 py-2 text-sm font-medium text-foreground shadow-sm transition-colors"
       aria-label="تغییر حالت روشن/تاریک"
       title={isDark ? "حالت روشن" : "حالت تاریک"}
     >

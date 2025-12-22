@@ -26,13 +26,13 @@ export default function DashboardLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { label: "داشبورد", href: "/dashboard", icon: Home },
-    { label: "سفارشات", href: "/dashboard/orders", icon: ShoppingCart },
-    { label: "محصولات", href: "/dashboard/products", icon: Package },
-    { label: "آمار فروش", href: "/dashboard/analytics", icon: BarChart3 },
-    { label: "مشتریان", href: "/dashboard/customers", icon: Users },
-    { label: "مالی", href: "/dashboard/finance", icon: DollarSign },
-    { label: "تنظیمات", href: "/dashboard/settings", icon: Settings },
+    { label: "داشبورد", href: "/dashboard/seller", icon: Home },
+    { label: "سفارشات", href: "/dashboard/seller/orders", icon: ShoppingCart },
+    { label: "محصولات", href: "/dashboard/seller/products", icon: Package },
+    { label: "آمار فروش", href: "/dashboard/seller/analytics", icon: BarChart3 },
+    { label: "مشتریان", href: "/dashboard/seller/customers", icon: Users },
+    { label: "مالی", href: "/dashboard/seller/finance", icon: DollarSign },
+    { label: "تنظیمات", href: "/dashboard/seller/settings", icon: Settings },
   ];
 
   return (

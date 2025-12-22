@@ -71,25 +71,45 @@ export default function SellerDashboard() {
 
   const getStatusLabel = (status: string) => {
     const statusMap: Record<string, { label: string; color: string }> = {
-      pending: { label: "در انتظار", color: "bg-yellow-100 text-yellow-800" },
-      confirmed: { label: "تایید شده", color: "bg-blue-100 text-blue-800" },
+      pending: {
+        label: "در انتظار",
+        color:
+          "bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300",
+      },
+      confirmed: {
+        label: "تایید شده",
+        color:
+          "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300",
+      },
       processing: {
         label: "در حال پردازش",
-        color: "bg-purple-100 text-purple-800",
+        color:
+          "bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300",
       },
-      shipped: { label: "ارسال شده", color: "bg-indigo-100 text-indigo-800" },
+      shipped: {
+        label: "ارسال شده",
+        color:
+          "bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300",
+      },
       delivered: {
         label: "تحویل داده شده",
-        color: "bg-green-100 text-green-800",
+        color:
+          "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300",
       },
-      cancelled: { label: "لغو شده", color: "bg-red-100 text-red-800" },
+      cancelled: {
+        label: "لغو شده",
+        color: "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300",
+      },
       refunded: {
         label: "بازگشت داده شده",
-        color: "bg-gray-100 text-gray-800",
+        color: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200",
       },
     };
     return (
-      statusMap[status] || { label: status, color: "bg-gray-100 text-gray-800" }
+      statusMap[status] || {
+        label: status,
+        color: "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200",
+      }
     );
   };
 
@@ -131,42 +151,48 @@ export default function SellerDashboard() {
       value: formatCurrency(stats?.totalSales || 0),
       icon: DollarSign,
       color: "from-green-500 to-green-600",
-      bgColor: "bg-green-50",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
     {
       label: "سفارشات",
       value: formatNumber(stats?.totalOrders || 0),
       icon: ShoppingCart,
       color: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
     {
       label: "محصولات",
       value: formatNumber(stats?.totalProducts || 0),
       icon: Package,
       color: "from-purple-500 to-purple-600",
-      bgColor: "bg-purple-50",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
     {
       label: "مشتریان",
       value: formatNumber(stats?.totalCustomers || 0),
       icon: Users,
       color: "from-orange-500 to-orange-600",
-      bgColor: "bg-orange-50",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
     {
       label: "درآمد امروز",
       value: formatCurrency(stats?.todayRevenue || 0),
       icon: TrendingUp,
       color: "from-primary to-primary",
-      bgColor: "bg-primary/10",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
     {
       label: "بازدیدها",
       value: formatNumber(stats?.totalViews || 0),
       icon: Eye,
       color: "from-cyan-500 to-cyan-600",
-      bgColor: "bg-cyan-50",
+      bgColor:
+        "bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-light-grey/70 dark:border-gray-700/70",
     },
   ];
 
@@ -189,7 +215,7 @@ export default function SellerDashboard() {
           return (
             <div
               key={index}
-              className={`${stat.bgColor} rounded-2xl p-6 border border-light-grey hover:shadow-lg transition-all duration-300`}
+              className={`${stat.bgColor} rounded-2xl p-6 transition-colors duration-300`}
             >
               <div className="flex items-center justify-between mb-4">
                 <div
@@ -204,7 +230,7 @@ export default function SellerDashboard() {
                   </p>
                 </div>
               </div>
-              <div className="w-full bg-white/50 rounded-full h-2">
+              <div className="w-full bg-light-grey/60 dark:bg-gray-700/60 rounded-full h-2">
                 <div
                   className={`h-2 bg-gradient-to-r ${stat.color} rounded-full`}
                   style={{ width: "75%" }}
@@ -218,7 +244,7 @@ export default function SellerDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Recent Orders */}
         <div className="lg:col-span-2">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-light-grey">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-light-grey/70 dark:border-gray-700/70">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
                 <ShoppingCart className="w-6 h-6 text-primary" />
@@ -235,45 +261,46 @@ export default function SellerDashboard() {
 
             {orders && orders.data.length > 0 ? (
               <div className="space-y-4">
-                {orders.data.map((order) => {
-                  const statusInfo = getStatusLabel(order.status);
-                  return (
-                    <div
-                      key={order.id}
-                      className="flex items-center justify-between p-4 bg-light-mint/50 rounded-xl hover:bg-light-mint transition-colors"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                          <ShoppingCart className="w-5 h-5 text-primary" />
+                {orders.data?.length > 0 &&
+                  orders.data?.map((order) => {
+                    const statusInfo = getStatusLabel(order.status);
+                    return (
+                      <div
+                        key={order.id}
+                        className="flex items-center justify-between p-4 bg-light-mint/50 dark:bg-gray-700/40 rounded-xl hover:bg-light-mint dark:hover:bg-gray-700/60 transition-colors"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-primary/10 dark:bg-primary/20 rounded-lg flex items-center justify-center">
+                            <ShoppingCart className="w-5 h-5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="font-medium text-foreground">
+                              #{order.orderNumber}
+                            </p>
+                            <p className="text-sm text-grey flex items-center gap-1">
+                              <Clock className="w-3 h-3" />
+                              {formatDate(order.createdAt)}
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-medium text-foreground">
-                            #{order.orderNumber}
+                        <div className="text-left">
+                          <p className="font-bold text-foreground text-lg">
+                            {formatCurrency(order.totalAmount)}
                           </p>
-                          <p className="text-sm text-grey flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {formatDate(order.createdAt)}
-                          </p>
+                          <span
+                            className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color} mt-1`}
+                          >
+                            {statusInfo.label}
+                          </span>
                         </div>
                       </div>
-                      <div className="text-left">
-                        <p className="font-bold text-foreground text-lg">
-                          {formatCurrency(order.totalAmount)}
-                        </p>
-                        <span
-                          className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${statusInfo.color} mt-1`}
-                        >
-                          {statusInfo.label}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
               </div>
             ) : (
               <div className="text-center py-12">
                 <Package className="w-16 h-16 text-grey mx-auto mb-4" />
-                <p className="text-grey font-medium">
+                <p className="text-foreground font-medium">
                   هنوز سفارشی ثبت نشده است
                 </p>
                 <p className="text-sm text-grey/70 mt-1">
@@ -284,19 +311,19 @@ export default function SellerDashboard() {
           </div>
 
           {/* Sales Chart Placeholder */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-light-grey mt-6">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-light-grey/70 dark:border-gray-700/70 mt-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
                 <BarChart3 className="w-6 h-6 text-primary" />
                 نمودار فروش
               </h2>
-              <span className="text-sm text-grey bg-light-mint px-3 py-1 rounded-full">
+              <span className="text-sm text-foreground bg-light-mint/80 dark:bg-gray-700/50 px-3 py-1 rounded-full">
                 ۳۰ روز گذشته
               </span>
             </div>
-            <div className="h-64 flex flex-col items-center justify-center bg-gradient-to-br from-light-mint to-white rounded-xl border-2 border-dashed border-light-grey">
+            <div className="h-64 flex flex-col items-center justify-center bg-gradient-to-br from-light-mint to-white dark:from-gray-900 dark:to-gray-800 rounded-xl border-2 border-dashed border-light-grey/70 dark:border-gray-700/70">
               <BarChart3 className="w-12 h-12 text-grey mb-4" />
-              <p className="text-grey font-medium">نمودار فروش ماهانه</p>
+              <p className="text-foreground font-medium">نمودار فروش ماهانه</p>
               <p className="text-sm text-grey/70 mt-1">
                 به زودی در دسترس خواهد بود
               </p>
@@ -331,16 +358,16 @@ export default function SellerDashboard() {
           </div>
 
           {/* Notifications */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-light-grey">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-light-grey/70 dark:border-gray-700/70">
             <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
               <Eye className="w-5 h-5 text-primary" />
               اعلانات
             </h3>
             <div className="space-y-4">
               {stats?.pendingOrders ? (
-                <div className="flex items-center gap-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <Clock className="w-4 h-4 text-yellow-600" />
+                <div className="flex items-center gap-3 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/40 rounded-lg">
+                  <div className="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center">
+                    <Clock className="w-4 h-4 text-yellow-600 dark:text-yellow-300" />
                   </div>
                   <div>
                     <p className="font-medium text-foreground text-sm">
@@ -350,9 +377,9 @@ export default function SellerDashboard() {
                   </div>
                 </div>
               ) : null}
-              <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-4 h-4 text-green-600" />
+              <div className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/40 rounded-lg">
+                <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-green-600 dark:text-green-300" />
                 </div>
                 <div>
                   <p className="font-medium text-foreground text-sm">
@@ -367,14 +394,15 @@ export default function SellerDashboard() {
           </div>
 
           {/* Recent Activity */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-light-grey">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-light-grey/70 dark:border-gray-700/70">
             <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
               <Clock className="w-5 h-5 text-primary" />
               فعالیت اخیر
             </h3>
             <div className="space-y-3">
               {orders &&
-                orders.data.slice(0, 4).map((order, index) => (
+                orders.data?.length > 0 &&
+                orders.data?.slice(0, 4).map((order, index) => (
                   <div key={order.id} className="flex items-start gap-3">
                     <div
                       className={`w-2 h-2 rounded-full mt-2 ${
