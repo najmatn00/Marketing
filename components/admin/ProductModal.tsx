@@ -5,14 +5,7 @@ import { useState } from "react";
 interface ProductModalProps {
   isOpen: boolean;
   onClose: () => void;
-  product?: {
-    id?: number;
-    name: string;
-    category: string;
-    price: number;
-    stock: number;
-    status: string;
-  };
+  product?: any;
 }
 
 export default function ProductModal({
@@ -37,6 +30,14 @@ export default function ProductModal({
     onClose();
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setUploadedImage(e.target.files[0]);
+    }
+  };
+
+  if (!isOpen) return null;
+
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
@@ -53,9 +54,9 @@ export default function ProductModal({
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-2xl"
+            className="text-white hover:text-gray-200 transition-colors"
           >
-            ×
+            <X className="w-6 h-6" />
           </button>
         </div>
 
@@ -128,6 +129,7 @@ export default function ProductModal({
                 />
               </div>
             </div>
+          )}
 
             {/* Status */}
             <div>
@@ -144,16 +146,16 @@ export default function ProductModal({
                 required
               />
             </div>
-          </div>
+          )}
 
-          {/* Actions */}
-          <div className="flex items-center justify-end gap-3 mt-6">
+          {/* Footer Buttons */}
+          <div className="flex items-center justify-between gap-3 p-6 border-t">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
             >
-              انصراف
+              لغو
             </button>
             <button
               type="submit"

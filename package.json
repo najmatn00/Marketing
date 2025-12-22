@@ -23,12 +23,15 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+<<<<<<< HEAD
     "@radix-ui/react-dialog": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
     "@react-pdf/renderer": "^4.3.1",
     "axios": "^1.13.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+=======
+>>>>>>> bbea4e4c5c8bff1ff700d4b2ed491b25c2687ab6
     "husky": "^9.1.7",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.556.0",

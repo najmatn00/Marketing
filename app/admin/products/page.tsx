@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { Plus, Search, Bell } from 'lucide-react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import ProductsTable, { Product } from '@/components/admin/ProductsTable';
 import Pagination from '@/components/admin/Pagination';
-import ProductModal from '@/components/admin/ProductModal';
 
 const initialProducts: Product[] = [
   {
@@ -121,11 +121,10 @@ const initialProducts: Product[] = [
 const ITEMS_PER_PAGE = 6;
 
 export default function AdminProductsPage() {
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<Product | undefined>(undefined);
 
   // Filter products based on search query
   const filteredProducts = useMemo(() => {
@@ -154,13 +153,12 @@ export default function AdminProductsPage() {
   };
 
   const handleNewProduct = () => {
-    setSelectedProduct(undefined);
-    setIsModalOpen(true);
+    router.push('/admin/products/new');
   };
 
   const handleEdit = (product: Product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+    // TODO: Navigate to edit page
+    alert(`تکمیل صفحه ویرایش: ${product.name}`);
   };
 
   const handleDelete = (id: number) => {
@@ -215,6 +213,7 @@ export default function AdminProductsPage() {
             >
               <Plus className="w-5 h-5 text-primary" />
               <span className="text-dark-blue text-[18px] font-semibold">محصول جدید</span>
+              
             </button>
           </div>
         </div>
@@ -236,13 +235,6 @@ export default function AdminProductsPage() {
           />
         )}
       </main>
-
-      {/* Product Modal */}
-      <ProductModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        product={selectedProduct}
-      />
     </div>
   );
 }
